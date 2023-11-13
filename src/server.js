@@ -1,5 +1,5 @@
 const http = require("http")
-
+const { Festival } = require("./Models/models");
 const sequelize = require("./config/database")
 const app = require("./app")
 
