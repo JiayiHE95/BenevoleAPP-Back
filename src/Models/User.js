@@ -30,7 +30,7 @@ const User = sequelize.define('User', {
   association: {
     type: DataTypes.STRING(50),
   },
-  taille_Tshirt: {
+  taille_tshirt: {
     type: DataTypes.STRING(10),
   },
   est_vegetarien: {
