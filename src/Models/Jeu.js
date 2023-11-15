@@ -14,6 +14,9 @@ const Jeu = sequelize.define('Jeu', {
   editeur: {
     type: DataTypes.STRING(255),
   },
+  type: {
+    type: DataTypes.STRING(255),
+  },
   recu: {
     type: DataTypes.BOOLEAN,
   },

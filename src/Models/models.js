@@ -17,7 +17,8 @@ const JeuEspace = require('./JeuEspace');
 Poste.hasMany(Espace,{ foreignKey: { name: 'idposte', allowNull: false }, onDelete: 'CASCADE' })
 Espace.belongsTo(Poste,{ foreignKey: { name: 'idposte', allowNull: false }})
 // Comment faire le Espace Espace ??
-Espace.belongsTo(Espace, { foreignKey: 'idzoneplan', onDelete: 'CASCADE' });
+Espace.hasMany(Espace,{ foreignKey: { name: 'idzoneplan'}, onDelete: 'CASCADE' })
+Espace.belongsTo(Espace, { foreignKey: { name: 'idzoneplan'}, onDelete: 'CASCADE' });
 
 
 //Relation PosteCreneau Poste
@@ -69,6 +70,149 @@ PosteCreneau.hasMany(Inscription, { foreignKey: 'idfestival', onDelete: 'CASCADE
 Inscription.belongsTo(PosteCreneau, { foreignKey: 'idfestival' });
 
 
+/*
+const fs = require('fs');
+const csv = require('csv-parser');
+const xlsx = require('xlsx');
 
+async function readFile(filePath) {
+  const fileExtension = filePath.split('.').pop().toLowerCase();
+
+  if (fileExtension === 'csv') {
+    // Pour les fichiers CSV
+    fs.createReadStream(filePath)
+      .pipe(csv())
+      .on('data', async (row) => {
+        await processRow(row);
+      })
+      .on('end', () => {
+        console.log('Lecture du fichier CSV terminée.');
+      });
+  } else if (fileExtension === 'xlsx') {
+    // Pour les fichiers XLSX
+    const workbook = xlsx.readFile(filePath);
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+    const data = xlsx.utils.sheet_to_json(sheet, { header: 1 });
+
+    // Ignorer l'en-tête
+    data.shift();
+    data.shift();
+
+    for (const row of data) {
+      await processRow(row);
+    }
+
+    console.log('Lecture du fichier XLSX terminée.');
+  } else {
+    console.error('Format de fichier non pris en charge.');
+  }
+}
+
+// Fonction pour traiter chaque ligne du fichier
+async function processRow(row) {
+  const nomJeu = row[0];
+  const editeur = row[1];
+  const type=row[2];
+  const notice = row[3];
+  const zonePlan = row[4];
+  const zoneBenevole = row[5];
+  const aAnimer = row[6] === 'oui';
+  const recu = row[7] === 'oui';
+  const video = row[8];
+
+  try {
+    //on regarde si un jeu a été créé, 
+    //si c'est pas le cas on le crée en récupérant son id
+    const [jeu, jeuCreated] = await Jeu.findOrCreate({
+      where: { nom: nomJeu }, // Ajoutez les conditions de recherche ici
+      defaults: {
+        editeur: editeur,
+        type: type,
+        notice: notice,
+        aanimer: aAnimer,
+        recu: recu,
+        video: video,
+      },
+    });
+
+    const idJeu=jeu.idjeu
+
+    //on récupère l'id du poste animation jeu
+    const poste = await Poste.findOne({
+      where: {
+        nom: "Animation jeux",
+      },
+    });
+    
+    const idPoste = poste.idposte
+    //on regarde si une zone bénévole a été créée, 
+    //si c'est pas le cas on la crée en récupérant son id
+    console.log(zoneBenevole)
+    console.log(zonePlan)
+    console.log(zonePlan==zoneBenevole)
+    const [newZoneBenevole, newZoneBenevoleCreated] = await Espace.findOrCreate({
+        where: { nom:zoneBenevole },
+        defaults:{
+          idposte : idPoste
+        }
+    });
+    const idZoneBenevole = newZoneBenevole.idzonebenevole
+
+    const [jeuEspace, JeuEspaceCreated] = await JeuEspace.findOrCreate({
+        where: {idjeu: idJeu,
+        idzonebenevole: idZoneBenevole,}
+    });
+    
+    console.log("voila " +jeuEspace.idjeu, jeuEspace.idzonebenevole);
+      
+      //si c'est une nouvelle zone, on vérifie si sa zone plan correspondante a été créée aussi
+      //s'il s'agit d'une zone sans sous-zones (zoneBenevole==zonePlan) ou une zone avec des sous-zones 
+    if(newZoneBenevoleCreated){
+        if(zoneBenevole==zonePlan){
+            console.log("c'est egal")
+            await Espace.update(
+            { idzoneplan: idZoneBenevole },
+            { where: { idzonebenevole: idZoneBenevole } }
+            );
+        }
+        else{
+            console.log("c'est pas egal")
+            const [newZonePlan, newZonePlanCreated] = await Espace.findOrCreate({
+            where: { nom:zonePlan },
+            defaults:{
+                idposte : idPoste
+            }
+            })
+            const idZonePlan=newZonePlan.idzonebenevole
+            console.log(newZonePlan.nom)
+            console.log(newZonePlanCreated)
+
+            if(newZonePlanCreated){
+                const updatedZonePlan = await Espace.update(
+                    { idzoneplan: idZonePlan },
+                    { where: { idzonebenevole: idZonePlan } }
+                );  
+                console.log(updatedZonePlan.idzonebenevole, updatedZonePlan.nom,updatedZonePlan.idzoneplan)
+            }
+
+            const updatedZoneBenevole=await Espace.update(
+            { idzoneplan: idZonePlan },
+            { where: { idzonebenevole: idZoneBenevole } }
+            );
+            console.log(updatedZoneBenevole.idzonebenevole, updatedZoneBenevole.nom,updatedZoneBenevole.idzoneplan)
+        }
+    }
+  
+  
+    
+}catch{
+
+}
+}
+
+
+readFile('C:\\Users\\he_ji\\Desktop\\AWI\\Projet\\awi_csv.xlsx');
+*/
 
 module.exports = { Festival , Creneau, Jeu, JeuEspace,Poste,PosteCreneau,Inscription,Supervision, User}
