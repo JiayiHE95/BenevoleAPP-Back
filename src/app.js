@@ -2,7 +2,9 @@ const express = require("express")
 const helmet = require("helmet")
 const cors = require("cors")
 
-const festivalRoutes = require("./Routes/FestivalRoutes") // chargement routes fesstival
+const festivalRoutes = require("./Routes/FestivalRoutes") 
+const posteRoutes = require("./Routes/PosteRoutes") 
+
 
 //const bcrypt = require('bcrypt');
 //const { createTokens, validateToken} =  require('./middleware/auth')
@@ -20,7 +22,7 @@ app.use(express.urlencoded({extended: true})) // Permet de lire les données des
 
 
 app.use("/festival", festivalRoutes)
-
+app.use("/poste", posteRoutes)
 
 app.get("/", (req,res)=>{
     res.json("Yoooo")
