@@ -2,6 +2,8 @@ const express = require("express")
 const helmet = require("helmet")
 const cors = require("cors")
 
+const festivalRoutes = require("./Routes/FestivalRoutes") // chargement routes fesstival
+
 //const bcrypt = require('bcrypt');
 //const { createTokens, validateToken} =  require('./middleware/auth')
 
@@ -15,8 +17,13 @@ app.use(express.json())// Transforme les requêtes entrantes JSON en objet JS
 // Exporte le module app pour l'utiliser dans d'autres fichiers (server.js)
 app.use(express.urlencoded({extended: true})) // Permet de lire les données des strings dans les requêtes entrantes 
 
+
+
+app.use("/festival", festivalRoutes)
+
+
 app.get("/", (req,res)=>{
-    res.json("Hello")
+    res.json("Yoooo")
 })
 
 
