@@ -4,19 +4,19 @@ const sequelize = require('../config/database');
 const Inscription = sequelize.define(
   'Inscription',
   {
-    idPoste: {
+    idposte: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    idCreneau: {
+    idcreneau: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    idUser: {
+    iduser: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    idFestival: {
+    idfestival: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },

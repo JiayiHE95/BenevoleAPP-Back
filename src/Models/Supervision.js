@@ -4,11 +4,11 @@ const sequelize = require('../config/database');
 const Supervision = sequelize.define(
   'Supervision',
   {
-    idUser: {
+    iduser: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    idZoneBenevole: {
+    idzonebenevole: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },

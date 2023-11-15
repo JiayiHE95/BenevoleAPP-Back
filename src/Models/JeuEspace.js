@@ -4,11 +4,11 @@ const sequelize = require('../config/database');
 const JeuEspace = sequelize.define(
   'JeuEspace',
   {
-    idJeu: {
+    idjeu: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    idZoneBenevole: {
+    idzonebenevole: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },

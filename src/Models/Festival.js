@@ -3,7 +3,7 @@ const sequelize = require("../config/database")
 
 
 const Festival = sequelize.define('Festival', {
-    idFestival: {
+    idfestival: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -18,6 +18,10 @@ const Festival = sequelize.define('Festival', {
     date_fin: {
       type: DataTypes.DATE,
     },
+    nom : {
+      type: DataTypes.STRING(255),
+      unique: true
+    }
     
   }, 
   {   

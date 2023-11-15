@@ -5,7 +5,7 @@ const sequelize = require('../config/database');
 const Espace = sequelize.define(
   'Espace',
   {
-    idZoneBenevole: {
+    idzonebenevole: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
@@ -14,11 +14,11 @@ const Espace = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    idPoste: {
+    idposte: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    idZonePlan: {
+    idzoneplan: {
       type: DataTypes.INTEGER,
       defaultValue: null,
     },

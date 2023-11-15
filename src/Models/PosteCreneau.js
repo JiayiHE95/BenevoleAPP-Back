@@ -4,15 +4,15 @@ const sequelize = require('../config/database');
 const PosteCreneau = sequelize.define(
   'PosteCreneau',
   {
-    idPoste: {
+    idposte: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    idCreneau: {
+    idcreneau: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    idFestival: {
+    idfestival: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },

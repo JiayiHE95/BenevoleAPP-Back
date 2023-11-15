@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database'); 
 
 const Jeu = sequelize.define('Jeu', {
-  idJeu: {
+  idjeu: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -17,7 +17,7 @@ const Jeu = sequelize.define('Jeu', {
   recu: {
     type: DataTypes.BOOLEAN,
   },
-  aAnimer: {
+  aanimer: {
     type: DataTypes.BOOLEAN,
   },
   notice: {
