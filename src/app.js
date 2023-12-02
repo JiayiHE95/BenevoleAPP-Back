@@ -5,6 +5,7 @@ const cors = require("cors")
 const festivalRoutes = require("./Routes/FestivalRoutes") 
 const posteRoutes = require("./Routes/PosteRoutes") 
 const userRoutes = require("./Routes/UserRoutes")
+const espaceRoutes = require("./Routes/EspaceRoutes")
 
 
 //const bcrypt = require('bcrypt');
@@ -25,6 +26,7 @@ app.use(express.urlencoded({extended: true})) // Permet de lire les données des
 app.use("/festival", festivalRoutes)
 app.use("/poste", posteRoutes)
 app.use("/user", userRoutes)
+app.use("/espace",espaceRoutes)
 
 app.get("/", (req,res)=>{
     res.json("Yoooo")

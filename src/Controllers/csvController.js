@@ -12,7 +12,8 @@ exports.importCsvToDB = async (req, res) => {
  */
 //A mettre la fonction suivante au front, qui envoie row au back sans appeler extractJeuEspace()
 //const filePath='C:\\Users\\he_ji\\Desktop\\AWI\\Projet\\awi_csv.xlsx'
-const filePath='../../awi_csv.xlsx'
+//'C:\\Users\\charm\\OneDrive\\Bureau\\APPLI BENEVOLE\\BenevoleAPP-Back\\awi_csv.xlsx'
+const filePath='C:\\Users\\charm\\OneDrive\\Bureau\\APPLI BENEVOLE\\BenevoleAPP-Back\\awi_csv.xlsx'
 readFile(filePath)
 
 }

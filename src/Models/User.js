@@ -49,8 +49,13 @@ const User = sequelize.define('User', {
       isIn: [['ADMIN', 'BENEVOLE', 'REFERENT']],
     },
   },
+  mdp: {
+    type: DataTypes.STRING(60),
+    allowNull: false,
+  }
 }, {
-  tableName: 'user',timestamps:false
+  tableName: 'user',
+  timestamps: false
 });
 
 module.exports = User;

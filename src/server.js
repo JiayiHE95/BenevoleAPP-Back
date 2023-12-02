@@ -13,7 +13,7 @@ sequelize.authenticate()
   })
 
 
-const port = 3000
+const port = 3005
 const server = http.createServer(app);
 
 

@@ -215,4 +215,4 @@ async function processRow(row) {
 readFile('C:\\Users\\he_ji\\Desktop\\AWI\\Projet\\awi_csv.xlsx');
 */
 
-module.exports = { Festival , Creneau, Jeu, JeuEspace,Poste,PosteCreneau,Inscription,Supervision, User}
+module.exports = { Festival , Creneau, Jeu, JeuEspace,Poste,PosteCreneau,Inscription,Supervision, User, Espace}
