@@ -1,0 +1,11 @@
+body{
+ display: flex;
+ flex-direction: column;
+}
+.logo{
+ align-self: flex-end;
+
+}
+img{
+ width: 400px;
+}

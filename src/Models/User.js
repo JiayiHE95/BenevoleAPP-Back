@@ -19,6 +19,14 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING(50),
     allowNull: false,
   },
+  mdp: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }, 
+  reset_password_token:{
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   tel: {
     type: DataTypes.STRING(15),
     allowNull: false,
@@ -32,6 +40,9 @@ const User = sequelize.define('User', {
   },
   taille_tshirt: {
     type: DataTypes.STRING(10),
+    validate: {
+      isIn: [['XS', 'S', 'M', "L","XL", "XXL"]],
+    },
   },
   est_vegetarien: {
     type: DataTypes.BOOLEAN,
