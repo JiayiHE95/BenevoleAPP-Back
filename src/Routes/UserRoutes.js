@@ -10,7 +10,7 @@ router.post('/inscription', userController.createUser)
 router.post('/connexion', userController.login)
 router.delete('/delete', userController.deleteUserById)
 router.get('/allusers', userController.getUsers)
-router.get('/get-user-by-id', userController.getUserById)
+router.get('/get-user-by-id/:iduser', userController.getUserById)
 router.get("/get-user-by-mail/:mail", userController.getUserByMail);
 router.get("/get-user-by-pwtoken/:token", userController.getUserByPWToken);
 router.get("/check-pw-token", userController.verifyPWToken);

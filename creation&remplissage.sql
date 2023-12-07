@@ -20,7 +20,7 @@ CREATE TABLE "user" (
     tel VARCHAR(15) NOT NULL,
     mail VARCHAR(100) NOT NULL,
     association VARCHAR(50),
-    taille_Tshirt VARCHAR(10),
+    taille_Tshirt VARCHAR(10)CHECK (taille_Tshirt IN ('XS', 'S', 'M', 'L', 'XL', 'XXL')) NOT NULL,
     est_vegetarien BOOLEAN,
     hebergement VARCHAR(50),
     jeu_prefere VARCHAR(50),

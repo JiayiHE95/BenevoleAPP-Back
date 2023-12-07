@@ -12,7 +12,6 @@ const fs = require('fs')
 
 exports.createUser = async(req, res) =>{
   const {pseudo,nom,prenom,tel,mail,association,taille_tshirt,est_vegetarien,hebergement,jeu_prefere,mdp} = req.body
-  console.log(req.body)
   const hashedPassword = await bcrypt.hash(mdp, 10);
 
     User.create({
@@ -50,13 +49,12 @@ exports.getUsers=(async (req, res) => {
 
 // Get a specific user by ID
 exports.getUserById=(async (req, res) => {
-  const {iduser} = req.body;
+  const {iduser} = req.params;
   try {
     const user = await User.findByPk(iduser);
     if (!user) {
       return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
-
     res.status(200).json({ user: user.toJSON() });
   } catch (error) {
     console.error(error);
@@ -102,13 +100,12 @@ exports.login = async(req, res)=>{
   await User.findOne({ 
     where: { mail: mail } 
   }).then((data)=>{
-    console.log(data)
     if (data){
       bcrypt.compare(mdp, data.mdp, (e, response)=>{
         if (response){
-          const mail=data.mail
-          const token=jwt.sign({mail},"jwtSecret",{
-            expiresIn:5000,
+          const iduser=data.iduser
+          const token=jwt.sign({iduser},"jwtSecret",{
+            expiresIn:1000,
           })
           res.send({auth:true, token:token, user:data})
         }else{
@@ -123,6 +120,7 @@ exports.login = async(req, res)=>{
 
 exports.verifyJWT=(req,res,next)=>{
   const token=req.headers["x-access-token"]
+  console.log("coucou")
   if (!token){
     res.send({auth:false, message:"token non trouvable"})
   }else{
@@ -130,7 +128,8 @@ exports.verifyJWT=(req,res,next)=>{
       if(err){
         res.send({auth:false, message:"token expiré"})
       }else{
-        req.userId=decoded.id
+        const iduser = decoded.iduser
+        console.log("iddf : ",iduser)
         res.send({auth:true, message:"logged"})
         next()
       }

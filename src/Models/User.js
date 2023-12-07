@@ -40,6 +40,9 @@ const User = sequelize.define('User', {
   },
   taille_tshirt: {
     type: DataTypes.STRING(10),
+    validate: {
+      isIn: [['XS', 'S', 'M', "L","XL", "XXL"]],
+    },
   },
   est_vegetarien: {
     type: DataTypes.BOOLEAN,
