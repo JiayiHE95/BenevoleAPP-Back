@@ -1,56 +1,20 @@
-const fs = require('fs');
-const csv = require('csv-parser');
-const xlsx = require('xlsx');
 const Jeu=require("../Models/Jeu")
 const Espace=require("../Models/Espace")
 const JeuEspace=require("../Models/JeuEspace")
 const Poste=require("../Models/Poste")
 
-exports.importCsvToDB = async (req, res) => {
- /** A décommenter lorsqu'on reçoit une ligne de csv depuis le front
- const { row } = req.body;
- */
-//A mettre la fonction suivante au front, qui envoie row au back sans appeler extractJeuEspace()
-const filePath='C:\\Users\\he_ji\\Desktop\\AWI\\Projet\\awi_csv.xlsx'
-//'C:\\Users\\charm\\OneDrive\\Bureau\\APPLI BENEVOLE\\BenevoleAPP-Back\\awi_csv.xlsx'
-//const filePath='C:\\Users\\charm\\OneDrive\\Bureau\\APPLI BENEVOLE\\BenevoleAPP-Back\\awi_csv.xlsx'
-readFile(filePath)
-
-}
-
-async function readFile(filePath) {
- const fileExtension = filePath.split('.').pop().toLowerCase();
- //TODO : compléter la méthode pour un fichier.csv
- /*
- if (fileExtension === 'csv') {
-   // Pour les fichiers CSV
-   fs.createReadStream(filePath)
-     .pipe(csv())
-     .on('data', async (row) => {
-       await extractJeuEspace(row);
-     })
-     .on('end', () => {
-       console.log('Lecture du fichier CSV terminée.');
-     });
- } else*/
-  if (fileExtension === 'xlsx') {
-   // Pour les fichiers XLSX
-   const workbook = xlsx.readFile(filePath);
-   const sheetName = workbook.SheetNames[0];
-   const sheet = workbook.Sheets[sheetName];
-   const data = xlsx.utils.sheet_to_json(sheet, { header: 1 });
-
-   // Ignorer l'en-tête
-   data.shift();
-   data.shift();
-
-   for (const row of data) {
-     await extractJeuEspace(row);
-   }
-   console.log('Lecture du fichier XLSX terminée.');
- } else {
-   console.error('Format de fichier non pris en charge.');
+exports.importFileToDB = async (req, res) => {
+ const{rows}=req.body
+try{
+ for (let i = 2; i < rows.length; i++) {
+  const row = rows[i];
+  await extractJeuEspace(row);
  }
+ res.status(200).json({success:true, message:"Importation réussie"});
+}catch (error){
+ res.status(500).json({success:false, message:error});
+}
+ console.log("Lecture du fichier XLSX terminée.");
 }
 
 async function extractJeuEspace(row) {
@@ -138,8 +102,10 @@ async function extractJeuEspace(row) {
            );
        }
    }
+   
     
-}catch{ //TODO
+}catch (error){ //TODO
 
 }
 }
+ 

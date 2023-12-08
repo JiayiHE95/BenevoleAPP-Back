@@ -6,6 +6,7 @@ const festivalRoutes = require("./Routes/FestivalRoutes")
 const posteRoutes = require("./Routes/PosteRoutes") 
 const userRoutes = require("./Routes/UserRoutes")
 const espaceRoutes = require("./Routes/EspaceRoutes")
+const fileRoutes = require("./Routes/FileRoutes")
 const jeuEspaceRoutes = require("./Routes/JeuEspaceRoutes")
 
 //const bcrypt = require('bcrypt');
@@ -39,7 +40,9 @@ app.use("/festival", festivalRoutes)
 app.use("/poste", posteRoutes)
 app.use("/user", userRoutes)
 app.use("/espace",espaceRoutes)
+app.use("/file",fileRoutes)
 app.use("/jeu", jeuEspaceRoutes)
+
 
 app.get("/", (req,res)=>{
     res.json("Yoooo")
@@ -49,7 +52,7 @@ app.get("/", (req,res)=>{
 /*
 TODO :Pour le test du csv, à déplacer
 */
-const csvController=require("./Controllers/csvController")
-csvController.importCsvToDB()
+//const csvController=require("./Controllers/csvController")
+//csvController.importCsvToDB()
 
 module.exports = app 

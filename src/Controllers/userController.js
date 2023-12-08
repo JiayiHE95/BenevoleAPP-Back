@@ -80,7 +80,6 @@ exports.getUserById=(async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
-    console.log(user)
     res.status(200).json({ user: user.toJSON() });
   } catch (error) {
     console.error(error);
@@ -146,7 +145,6 @@ exports.login = async(req, res)=>{
 
 exports.verifyJWT=(req,res,next)=>{
   const token=req.headers["x-access-token"]
- 
   if (!token){
     res.send({auth:false, message:"token non trouvable"})
   }else{
