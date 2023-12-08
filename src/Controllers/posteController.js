@@ -47,3 +47,14 @@ exports.getAllPostes = async (req, res) => {
         res.status(500).json({ message: "Erreur serveur" });
     }
 };
+
+exports.getOnePosteById = async (req, res) => {
+    try {
+        const poste = await Poste.findOne({where: { idposte: req.query.idposte }});
+
+        res.status(200).json({poste});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+};

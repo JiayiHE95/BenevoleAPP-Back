@@ -6,7 +6,7 @@ const festivalRoutes = require("./Routes/FestivalRoutes")
 const posteRoutes = require("./Routes/PosteRoutes") 
 const userRoutes = require("./Routes/UserRoutes")
 const espaceRoutes = require("./Routes/EspaceRoutes")
-
+const jeuEspaceRoutes = require("./Routes/JeuEspaceRoutes")
 
 //const bcrypt = require('bcrypt');
 //const { createTokens, validateToken} =  require('./middleware/auth')
@@ -39,6 +39,7 @@ app.use("/festival", festivalRoutes)
 app.use("/poste", posteRoutes)
 app.use("/user", userRoutes)
 app.use("/espace",espaceRoutes)
+app.use("/jeu", jeuEspaceRoutes)
 
 app.get("/", (req,res)=>{
     res.json("Yoooo")

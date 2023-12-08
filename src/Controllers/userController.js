@@ -146,7 +146,7 @@ exports.login = async(req, res)=>{
 
 exports.verifyJWT=(req,res,next)=>{
   const token=req.headers["x-access-token"]
-  console.log("coucou")
+ 
   if (!token){
     res.send({auth:false, message:"token non trouvable"})
   }else{
@@ -155,7 +155,6 @@ exports.verifyJWT=(req,res,next)=>{
         res.send({auth:false, message:"token expiré"})
       }else{
         const iduser = decoded.iduser
-        console.log("iddf : ",iduser)
         res.send({auth:true, message:"logged"})
         next()
       }
