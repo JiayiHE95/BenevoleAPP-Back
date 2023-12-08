@@ -7,7 +7,7 @@ const posteRoutes = require("./Routes/PosteRoutes")
 const userRoutes = require("./Routes/UserRoutes")
 const espaceRoutes = require("./Routes/EspaceRoutes")
 const fileRoutes = require("./Routes/FileRoutes")
-
+const jeuEspaceRoutes = require("./Routes/JeuEspaceRoutes")
 
 //const bcrypt = require('bcrypt');
 //const { createTokens, validateToken} =  require('./middleware/auth')
@@ -41,6 +41,7 @@ app.use("/poste", posteRoutes)
 app.use("/user", userRoutes)
 app.use("/espace",espaceRoutes)
 app.use("/file",fileRoutes)
+app.use("/jeu", jeuEspaceRoutes)
 
 
 app.get("/", (req,res)=>{
