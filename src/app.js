@@ -35,8 +35,6 @@ app.use(function(req, res, next) {
 // Exporte le module app pour l'utiliser dans d'autres fichiers (server.js)
 app.use(express.urlencoded({extended: true})) // Permet de lire les données des strings dans les requêtes entrantes 
 
-
-
 app.use("/festival", festivalRoutes)
 app.use("/poste", posteRoutes)
 app.use("/user", userRoutes)
