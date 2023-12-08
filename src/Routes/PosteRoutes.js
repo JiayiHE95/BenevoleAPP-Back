@@ -8,5 +8,6 @@ const router = express.Router()
 //router.post('/creation', posteController.createPoste)
 //router.delete('/delete', posteController.deletePoste)
 router.get('/allpostes', posteController.getAllPostes)
+router.get('/one', posteController.getOnePosteById)
 
 module.exports = router;
