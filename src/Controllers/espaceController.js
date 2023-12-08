@@ -1,4 +1,5 @@
 const { Espace } = require('../Models/models');
+const sequelize = require('../config/database') ;
 
 exports.createEspace = async (req, res) => {
     const { nom, idPoste, idZonePlan } = req.body;
@@ -36,10 +37,17 @@ exports.deleteEspace = async (req, res) => {
     }
 };
 
-// Get all espaces
-exports.getAllEspaces = async (req, res) => {
+// Get all espaces using raw SQL
+exports.getAllEspacesParent = async (req, res) => {
     try {
-        const espaces = await Espace.findAll();
+               const query = `
+            SELECT * FROM public.espace
+            WHERE idzonebenevole = idzoneplan
+        `;
+
+        const espaces = await sequelize.query(query, {
+            type: sequelize.QueryTypes.SELECT,
+        });
 
         res.status(200).json({ espaces: espaces });
     } catch (error) {
@@ -47,3 +55,4 @@ exports.getAllEspaces = async (req, res) => {
         res.status(500).json({ message: "Erreur serveur" });
     }
 };
+

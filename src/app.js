@@ -50,7 +50,7 @@ app.get("/", (req,res)=>{
 /*
 TODO :Pour le test du csv, à déplacer
 */
-//const csvController=require("./Controllers/csvController")
-//csvController.importCsvToDB()
+const csvController=require("./Controllers/csvController")
+csvController.importCsvToDB()
 
 module.exports = app 

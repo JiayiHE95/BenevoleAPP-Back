@@ -28,11 +28,11 @@ CREATE TABLE "user" (
 );
 
 
-INSERT INTO public."user" (pseudo, nom, prenom, mdp, tel, mail, role)
-VALUES ('chachou', 'Morchipont', 'Charlene', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123', 'charlene.morchipont@etu.umontpellier.fr', 'ADMIN');
+INSERT INTO public."user" (pseudo, nom, prenom, mdp, tel, mail,taille_tshirt, role)
+VALUES ('chachou', 'Morchipont', 'Charlene', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123', 'charlene.morchipont@etu.umontpellier.fr','M', 'ADMIN');
 
-INSERT INTO public."user" (pseudo, nom, prenom, mdp, tel, mail, role)
-VALUES ('jiayi', 'He', 'Jiayi', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123', 'jiayi.he@etu.umontpellier.fr', 'BENEVOLE');
+INSERT INTO public."user" (pseudo, nom, prenom, mdp, tel, mail,taille_tshirt, role)
+VALUES ('jiayi', 'He', 'Jiayi', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123', 'jiayi.he@etu.umontpellier.fr','XS', 'BENEVOLE');
 
 
 CREATE TABLE festival (
