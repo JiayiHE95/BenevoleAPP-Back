@@ -7,6 +7,7 @@ const jwt=require("jsonwebtoken")
 const nodemailer = require('nodemailer')
 const handlebars = require('handlebars')
 const fs = require('fs')
+const { Op } = require('sequelize');
 
 
 
@@ -34,6 +35,33 @@ exports.createUser = async(req, res) =>{
       throw e
     })
   }
+
+  exports.updateUser = async (req, res) => {
+    const {pseudo,nom,prenom,tel,mail,association,taille_tshirt,est_vegetarien,hebergement,jeu_prefere,iduser} = req.body
+    console.log(mail)
+    if (typeof mail === 'string') {
+      console.log("mail is a string")
+    }
+    await User.update({ 
+      pseudo: pseudo,
+      nom: nom,
+      prenom: prenom,
+      tel: tel,
+      mail: mail,
+      association: association,
+      taille_tshirt: taille_tshirt,
+      est_vegetarien: est_vegetarien,
+      hebergement:hebergement,
+      jeu_prefere: jeu_prefere,  
+    },
+    { where: { iduser:  iduser } }
+    ).then(()=>{
+      res.status(200).send({update:true})
+    }).catch((e)=>{ 
+      res.status(500).end()
+      throw e
+    })
+  }
   
 
 // Get all users
@@ -55,6 +83,7 @@ exports.getUserById=(async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
+    console.log(user)
     res.status(200).json({ user: user.toJSON() });
   } catch (error) {
     console.error(error);
@@ -137,6 +166,26 @@ exports.verifyJWT=(req,res,next)=>{
   }
 }
 
+
+exports.verifyPassword= async (req, res) => {
+  const { mail, mdp } = req.body
+  await User.findOne({ 
+    raw: true,
+    where: { mail: mail } 
+  }).then((data)=>{
+    if (data){
+      bcrypt.compare(mdp, data.mdp, (e, response)=>{
+        if (response){
+          res.send({passwordCorrect:true})
+        }else{
+          res.send({passwordCorrect:false})
+        }
+      })
+    }else{
+      res.send({passwordCorrect:false})
+    }
+  })
+}
 
 exports.verifyPWToken=(req,res,next)=>{
   const token=req.headers["pw-token"]
