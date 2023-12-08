@@ -79,7 +79,8 @@ CREATE TABLE jeu (
 
 CREATE TABLE poste (
     idPoste SERIAL PRIMARY KEY ,
-    nom VARCHAR(255) NOT NULL
+    nom VARCHAR(255) NOT NULL,
+    description TEXT
 );
 
 INSERT INTO poste (nom) VALUES

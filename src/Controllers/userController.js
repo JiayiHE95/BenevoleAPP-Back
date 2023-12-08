@@ -38,10 +38,7 @@ exports.createUser = async(req, res) =>{
 
   exports.updateUser = async (req, res) => {
     const {pseudo,nom,prenom,tel,mail,association,taille_tshirt,est_vegetarien,hebergement,jeu_prefere,iduser} = req.body
-    console.log(mail)
-    if (typeof mail === 'string') {
-      console.log("mail is a string")
-    }
+    
     await User.update({ 
       pseudo: pseudo,
       nom: nom,

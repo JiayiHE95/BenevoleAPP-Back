@@ -12,6 +12,10 @@ const Poste = sequelize.define('Poste', {
     type: DataTypes.STRING(255),
     allowNull: false,
   },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  }
 }, {
   tableName: 'poste',timestamps:false
 });
