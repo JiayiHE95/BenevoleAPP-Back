@@ -1,15 +1,16 @@
-
-
-const { JeuEspace, Jeu } = require('../Models/models');
+const { JeuEspace, Jeu, Espace } = require('../Models/models');
 
 exports.getAllJeuxByIdjeu = async (req, res) => {
     try {
         const jeux = await JeuEspace.findAll({
-            where: { idzonebenevole: req.query.idzonebenevole },
             include: [
                 {
+                    model: Espace,
+                    where: { idzoneplan: req.query.idzonebenevole },
+                },
+                {
                     model: Jeu,
-                    // Add any additional conditions for the join here if needed
+                    // Ajoutez ici toutes les conditions supplémentaires pour la jointure si nécessaire.
                 }
             ],
         });
