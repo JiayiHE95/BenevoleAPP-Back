@@ -4,17 +4,20 @@ const sequelize = require('../config/database');
 const PosteCreneau = sequelize.define(
   'PosteCreneau',
   {
-    idposte: {
+    idpc:{
       type: DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
+    },
+    idposte: {
+      type: DataTypes.INTEGER,
     },
     idcreneau: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
     },
-    idfestival: {
+    idzonebenevole: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
+   
     },
     capacite: {
       type: DataTypes.INTEGER,

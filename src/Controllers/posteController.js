@@ -2,16 +2,17 @@ const { Poste } = require('../Models/models');
 
 // Create a new poste
 exports.createPoste = async (req, res) => {
-    const { nom } = req.body;
+    const { nom, description } = req.body;
     try {
         const poste = await Poste.create({
-            nom: nom
+            nom: nom,
+            description: description
         });
 
-        res.status(201).json({ message: "Poste ajouté !", poste: poste.toJSON() });
+        res.status(201).json({ created: true, poste: poste.toJSON() });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Erreur serveur" });
+        res.status(500).json({ created:false, message: "Erreur serveur" });
     }
 };
 

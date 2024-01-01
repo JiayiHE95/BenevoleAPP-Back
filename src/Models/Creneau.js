@@ -19,6 +19,10 @@ const Creneau = sequelize.define('Creneau', {
     type: DataTypes.TIME,
     allowNull: false,
   },
+  idfestival: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+  },
 }, {
   tableName: 'creneau',timestamps:false
 });

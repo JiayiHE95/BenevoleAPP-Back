@@ -4,9 +4,11 @@ const festivalController = require('../Controllers/festivalController')
 
 const router = express.Router()
 
-
-router.post('/creation', festivalController.createFestival)
+router.get('/get-festival-by-annee/:annee', festivalController.getFestivalByAnnee)
+router.post('/create', festivalController.createFestival)
 router.delete('/delete', festivalController.deleteFestival)
-router.get('/allfestivals', festivalController.getAllFestivals)
+router.get('/all', festivalController.getAllFestivals)
+router.get('/current', festivalController.getFestivalEnCours)
+router.post('/update', festivalController.updateFestival)
 
 module.exports = router;

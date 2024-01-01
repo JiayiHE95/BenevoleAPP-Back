@@ -11,19 +11,49 @@ const Jeu = sequelize.define('Jeu', {
     type: DataTypes.STRING(255),
     allowNull: false,
   },
+  auteur: {
+    type: DataTypes.STRING(255),
+  },
   editeur: {
+    type: DataTypes.STRING(255),
+  },
+  nbjoueurs: {
+    type: DataTypes.STRING(255),
+  },
+  agemin: {
+    type: DataTypes.STRING(255),
+  },
+  duree: {
     type: DataTypes.STRING(255),
   },
   type: {
     type: DataTypes.STRING(255),
   },
-  recu: {
-    type: DataTypes.BOOLEAN,
+  notice: {
+    type: DataTypes.STRING(255),
   },
   aanimer: {
     type: DataTypes.BOOLEAN,
   },
-  notice: {
+  recu: {
+    type: DataTypes.BOOLEAN,
+  },
+  mecanismes: {
+    type: DataTypes.STRING(255),
+  },
+  themes: {
+    type: DataTypes.STRING(255),
+  },
+  tags: {
+    type: DataTypes.STRING(255),
+  },
+  description: {
+    type: DataTypes.TEXT,
+  },
+  image: {
+    type: DataTypes.STRING(255),
+  },
+  logo: {
     type: DataTypes.STRING(255),
   },
   video: {

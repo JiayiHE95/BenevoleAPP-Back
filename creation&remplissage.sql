@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS flexible_user_creneau CASCADE;
 DROP TABLE IF EXISTS poste_creneau CASCADE;
 DROP TABLE IF EXISTS jeu_espace CASCADE;
 DROP TABLE IF EXISTS supervision CASCADE;
@@ -35,45 +36,50 @@ INSERT INTO public."user" (pseudo, nom, prenom, mdp, tel, mail,taille_tshirt, ro
 VALUES ('jiayi', 'He', 'Jiayi', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123', 'jiayi.he@etu.umontpellier.fr','XS', 'BENEVOLE');
 
 
+INSERT INTO public."user" (pseudo, nom, prenom, mdp, tel, mail,taille_tshirt, role)
+VALUES ('benevole1', 'He', 'Jiayi', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123', 'test@etu.umontpellier.fr','XS', 'BENEVOLE');
+
+
+
 CREATE TABLE festival (
     idFestival SERIAL PRIMARY KEY ,
     annee INTEGER NOT NULL,
-    nom VARCHAR(255) UNIQUE,
+    nom VARCHAR(255) NOT NULL,
+    valide BOOLEAN NOT NULL DEFAULT FALSE,
     date_debut DATE,
     date_fin DATE
     -- Ajoutez d'autres colonnes selon vos besoins
 );
 
+
 CREATE TABLE creneau (
     idCreneau SERIAL PRIMARY KEY ,
     jour DATE NOT NULL,
     heure_debut TIME NOT NULL,
-    heure_fin TIME NOT NULL
+    heure_fin TIME NOT NULL,
+    intervalle INTEGER NOT NULL DEFAULT 2,
+    idFestival INTEGER,
+    FOREIGN KEY (idFestival) REFERENCES festival(idFestival)
 );
-
--- Créneaux pour le 18 novembre
-INSERT INTO creneau (jour, heure_debut, heure_fin) VALUES 
-    ('2023-11-18', '09:00:00', '11:00:00'),
-    ('2023-11-18', '11:00:00', '14:00:00'),
-    ('2023-11-18', '14:00:00', '17:00:00'),
-    ('2023-11-18', '17:00:00', '20:00:00'),
-    ('2023-11-18', '20:00:00', '22:00:00');
-
--- Créneaux pour le 19 novembre
-INSERT INTO creneau (jour, heure_debut, heure_fin) VALUES 
-    ('2023-11-19', '09:00:00', '11:00:00'),
-    ('2023-11-19', '11:00:00', '14:00:00'),
-    ('2023-11-19', '14:00:00', '17:00:00'),
-    ('2023-11-19', '17:00:00', '20:00:00');
 
 CREATE TABLE jeu (
     idJeu SERIAL PRIMARY KEY ,
     nom VARCHAR(255) NOT NULL,
+    auteur VARCHAR(255),
     editeur VARCHAR(255),
+    nbJoueurs VARCHAR(255),
+    ageMin VARCHAR(255),
+    duree VARCHAR(255),
     type VARCHAR(255),
-    recu BOOLEAN,
-    aAnimer BOOLEAN,
     notice VARCHAR(255),
+    aAnimer BOOLEAN,
+    recu BOOLEAN,
+    mecanismes VARCHAR(255),
+    themes VARCHAR(255),
+    tags VARCHAR(255),
+    description TEXT,
+    image VARCHAR(255),
+    Logo VARCHAR(255),
     video VARCHAR(255)
 );
 
@@ -101,41 +107,62 @@ CREATE TABLE espace (
 );
 
 CREATE TABLE poste_creneau (
+    idPC SERIAL PRIMARY KEY,
     idPoste INTEGER,
     idCreneau INTEGER,
-    idFestival INTEGER,
+    idZoneBenevole INTEGER DEFAULT NULL,
     capacite INTEGER,
     capacite_restante INTEGER,
-    PRIMARY KEY (idPoste, idCreneau, idFestival),
     FOREIGN KEY (idPoste) REFERENCES poste(idPoste),
     FOREIGN KEY (idCreneau) REFERENCES creneau(idCreneau),
-    FOREIGN KEY (idFestival) REFERENCES festival(idFestival)
+    FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole)
 );
 
 CREATE TABLE inscription (
    idPoste INTEGER,
    idCreneau INTEGER,
    idUser INTEGER,
-   idFestival INTEGER,
-   PRIMARY KEY (idPoste, idCreneau, idUser, idFestival),
+   idZoneBenevole INTEGER,
+   valide BOOLEAN NOT NULL DEFAULT FALSE,
+   PRIMARY KEY (idPoste, idCreneau, idUser, idZoneBenevole),
    FOREIGN KEY (idPoste) REFERENCES poste(idPoste),
    FOREIGN KEY (idCreneau) REFERENCES creneau(idCreneau),
    FOREIGN KEY (idUser) REFERENCES "user"(idUser),
-   FOREIGN KEY (idFestival) REFERENCES festival(idFestival)
+   FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole)
 );
 
 CREATE TABLE supervision (
     idUser INTEGER,
     idZoneBenevole INTEGER,
-    PRIMARY KEY (idZoneBenevole, idUser),
+    idFestival INTEGER,
+    PRIMARY KEY (idZoneBenevole, idUser, idFestival),
     FOREIGN KEY (idUser) REFERENCES "user"(idUser),
-    FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole)
+    FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole),
+    FOREIGN KEY (idFestival) REFERENCES festival(idFestival)
 );
 
 CREATE TABLE jeu_espace (
     idJeu INTEGER,
     idZoneBenevole INTEGER,
-    PRIMARY KEY (idZoneBenevole, idJeu),
+    idFestival INTEGER,
+    PRIMARY KEY (idZoneBenevole, idJeu, idFestival),
     FOREIGN KEY (idJeu) REFERENCES jeu(idJeu),
-    FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole)
-)
+    FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole),
+    FOREIGN KEY (idFestival) REFERENCES festival(idFestival)
+);
+
+CREATE TABLE flexible_user_creneau (
+    idUser INTEGER,
+    idCreneau INTEGER,
+    PRIMARY KEY (idUser, idCreneau),
+    FOREIGN KEY (idUser) REFERENCES "user"(idUser),
+    FOREIGN KEY (idCreneau) REFERENCES creneau(idCreneau)
+);
+
+
+/*
+pour tester, avec petite liste
+insert into inscription VALUES(1,1,1,197, false);
+insert into inscription VALUES(1,1,3,197, false);
+update poste_creneau set capacite_restante = capacite_restante-2 where idPoste = 1 and idCreneau = 1 and idZoneBenevole = 197;
+*/

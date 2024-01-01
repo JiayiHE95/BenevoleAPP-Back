@@ -1,13 +1,19 @@
 const { JeuEspace, Jeu, Espace } = require('../Models/models');
+const {Sequelize} = require('sequelize');
 
-exports.getAllJeuxByIdjeu = async (req, res) => {
+exports.getAllJeuxByEspace = async (req, res) => {
     try {
         const jeux = await JeuEspace.findAll({
             include: [
                 {
                     model: Espace,
-                    where: { idzoneplan: req.query.idzonebenevole },
-                },
+                    where: {
+                      [Sequelize.Op.or]: [
+                        { idzoneplan: req.query.idzonebenevole },
+                        { idzonebenevole: req.query.idzonebenevole }
+                      ],
+                    },
+                  },
                 {
                     model: Jeu,
                     // Ajoutez ici toutes les conditions supplémentaires pour la jointure si nécessaire.

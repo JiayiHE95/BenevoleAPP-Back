@@ -12,6 +12,10 @@ const Festival = sequelize.define('Festival', {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    valide: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     date_debut: {
       type: DataTypes.DATE,
     },

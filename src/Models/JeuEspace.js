@@ -12,6 +12,10 @@ const JeuEspace = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
+    idfestival: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    }
   },
   {
     tableName: 'jeu_espace',

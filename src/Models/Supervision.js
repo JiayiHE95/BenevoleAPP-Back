@@ -12,6 +12,10 @@ const Supervision = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
+    idfestival: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
   },
   {
     tableName: 'supervision',
