@@ -38,6 +38,10 @@ PosteCreneau.belongsTo(Espace,{foreignKey: {name: 'idzonebenevole', allowNull: t
 Festival.hasMany(Creneau, {foreignKey: { name: 'idfestival', allowNull: false }, onDelete: 'CASCADE' })
 Creneau.belongsTo(Festival,{foreignKey: {name: 'idfestival', allowNull: false}})
 
+// Relation PosteCreneau Festival
+Festival.hasMany(PosteCreneau, {foreignKey: { name: 'idfestival', allowNull: false }, onDelete: 'CASCADE' })
+PosteCreneau.belongsTo(Festival,{foreignKey: {name: 'idfestival', allowNull: false}})
+
 // Relation Espace Supervision
 Espace.hasMany(Supervision,{foreignKey: { name: 'idzonebenevole', allowNull: false }, onDelete: 'CASCADE' })
 Supervision.belongsTo(Espace,{foreignKey:{name: 'idzonebenevole', allowNull: false}})
@@ -72,6 +76,7 @@ Inscription.belongsTo(PosteCreneau, { foreignKey: 'idcreneau' });
 // Relation Espace Inscription
 Espace.hasMany(Inscription, { foreignKey: 'idzonebenevole', onDelete: 'CASCADE' });
 Inscription.belongsTo(Espace, { foreignKey: 'idzonebenevole' });
+
 
 // Relation User FlexibleUserCreneau
 User.hasMany(FlexibleUserCreneau,{foreignKey: { name: 'iduser', allowNull: false }, onDelete: 'CASCADE' })

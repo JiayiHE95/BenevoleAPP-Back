@@ -6,5 +6,8 @@ router.post('/create', inscriptionController.createInscription)
 router.post('/delete', inscriptionController.deleteInscription)
 router.get('/get-by-poste-creneau', inscriptionController.getIncriptionsByPostCreneau)
 router.get('/get-by-user/:iduser/:idcreneau', inscriptionController.getInscriptionsByUserCreneau)
+router.get('/user/:iduser/:idfestival',inscriptionController.getInscriptionsOfUserByFestival)
+router.post('/registered',inscriptionController.getRegisteredPeopleByCreneau)
+
 
 module.exports = router;

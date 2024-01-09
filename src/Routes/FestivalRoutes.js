@@ -8,7 +8,7 @@ router.get('/get-festival-by-annee/:annee', festivalController.getFestivalByAnne
 router.post('/create', festivalController.createFestival)
 router.delete('/delete', festivalController.deleteFestival)
 router.get('/all', festivalController.getAllFestivals)
-router.get('/current', festivalController.getFestivalEnCours)
+router.get('/:id', festivalController.getFestivalSelection)
 router.post('/update', festivalController.updateFestival)
 
 module.exports = router;

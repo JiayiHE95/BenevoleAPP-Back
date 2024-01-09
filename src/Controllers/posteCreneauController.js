@@ -29,7 +29,7 @@ exports.createPostCreneaux = async (req, res) => {
   try {
 
   const { idfestival, postes, intervalle, heure_debut, heure_fin, date_debut, date_fin } = req.body;
-  console.log(req.body);
+  console.log(idfestival);
 
   const jours = getDatesBetweenDates(new Date(date_debut), new Date(date_fin));
   console.log(jours);
@@ -49,6 +49,7 @@ exports.createPostCreneaux = async (req, res) => {
       // Créez les postes pour le créneau
       const posteCreneaux = postes.map(async (poste) => {
        await PosteCreneau.create({
+          idfestival : idfestival,
           idposte: poste.id,
           idcreneau: creneau.idcreneau,
           capacite: poste.capacite,
@@ -133,6 +134,33 @@ exports.getPostesCreneauxByFestival = async (req, res) => {
     res.status(500).json({ find : false, message: 'Erreur serveur' });
   }
 };
+
+exports.getAllPostsByFestivals = async (req, res) => {
+  try {
+    const { idfestival } = req.params;
+    // Select idposte from PosteCreneau where idfestival = idfestival
+    const postesCreneaux = await PosteCreneau.findAll({ where: { idfestival: idfestival } });
+
+    // Use a Set to ensure distinct idposte values
+    const idPostesSet = new Set(postesCreneaux.map(poste => poste.idposte));
+
+    // Convert the Set back to an array
+    const idPostes = Array.from(idPostesSet);
+
+    // Fetch individual Poste records based on idposte
+    const postes = [];
+    for (const id of idPostes) {
+      const poste = await Poste.findOne({ where: { idposte: id } });
+      postes.push(poste);
+    }
+
+    res.status(200).json({ postes });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 
 exports.getCreneauxByFestival = async (req, res) => {
   const { idfestival } = req.params;

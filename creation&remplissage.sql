@@ -41,7 +41,7 @@ VALUES ('benevole1', 'He', 'Jiayi', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef
 
 
 
-CREATE TABLE festival (
+CREATE TABLE festival ( 
     idFestival SERIAL PRIMARY KEY ,
     annee INTEGER NOT NULL,
     nom VARCHAR(255) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE creneau (
     heure_fin TIME NOT NULL,
     intervalle INTEGER NOT NULL DEFAULT 2,
     idFestival INTEGER,
-    FOREIGN KEY (idFestival) REFERENCES festival(idFestival)
+    FOREIGN KEY (idFestival) REFERENCES festival(idFestival)ON DELETE  CASCADE
 );
 
 CREATE TABLE jeu (
@@ -111,24 +111,28 @@ CREATE TABLE poste_creneau (
     idPoste INTEGER,
     idCreneau INTEGER,
     idZoneBenevole INTEGER DEFAULT NULL,
+    idFestival INTEGER,
     capacite INTEGER,
     capacite_restante INTEGER,
     FOREIGN KEY (idPoste) REFERENCES poste(idPoste),
     FOREIGN KEY (idCreneau) REFERENCES creneau(idCreneau),
-    FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole)
+    FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole),
+    FOREIGN KEY (idFestival) REFERENCES festival(idFestival) ON DELETE CASCADE
 );
 
 CREATE TABLE inscription (
    idPoste INTEGER,
    idCreneau INTEGER,
    idUser INTEGER,
+   idfestival INTEGER,
    idZoneBenevole INTEGER,
    valide BOOLEAN NOT NULL DEFAULT FALSE,
-   PRIMARY KEY (idPoste, idCreneau, idUser, idZoneBenevole),
+   PRIMARY KEY (idPoste, idCreneau, idUser, idZoneBenevole, idfestival),
    FOREIGN KEY (idPoste) REFERENCES poste(idPoste),
    FOREIGN KEY (idCreneau) REFERENCES creneau(idCreneau),
    FOREIGN KEY (idUser) REFERENCES "user"(idUser),
-   FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole)
+   FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole),
+    FOREIGN KEY (idfestival) REFERENCES festival(idfestival) ON DELETE CASCADE
 );
 
 CREATE TABLE supervision (
@@ -138,7 +142,7 @@ CREATE TABLE supervision (
     PRIMARY KEY (idZoneBenevole, idUser, idFestival),
     FOREIGN KEY (idUser) REFERENCES "user"(idUser),
     FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole),
-    FOREIGN KEY (idFestival) REFERENCES festival(idFestival)
+    FOREIGN KEY (idFestival) REFERENCES festival(idFestival) ON DELETE CASCADE
 );
 
 CREATE TABLE jeu_espace (
@@ -148,7 +152,7 @@ CREATE TABLE jeu_espace (
     PRIMARY KEY (idZoneBenevole, idJeu, idFestival),
     FOREIGN KEY (idJeu) REFERENCES jeu(idJeu),
     FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole),
-    FOREIGN KEY (idFestival) REFERENCES festival(idFestival)
+    FOREIGN KEY (idFestival) REFERENCES festival(idFestival) ON DELETE  CASCADE
 );
 
 CREATE TABLE flexible_user_creneau (

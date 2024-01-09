@@ -20,6 +20,10 @@ const Inscription = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
     }   , 
+    idfestival : {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    } ,
     valide: {
       type: DataTypes.BOOLEAN,
       allowNull: true,

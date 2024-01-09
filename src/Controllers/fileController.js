@@ -62,6 +62,7 @@ async function updatePosteCreneauForJeu(idfestival) {
         idzonebenevole: idzonebenevole,
         capacite: capacite,
         capacite_restante: capacite,
+        idfestival : idfestival
       });
       console.log("creer pour : ", jeuEspace.idzonebenevole, creneau.idcreneau)
       let inscriptions = await Inscription.findAll({

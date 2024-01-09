@@ -14,7 +14,8 @@ exports.createFestival = async (req, res) => {
             valide: false,
 
         });
-
+        
+        
         res.status(201).json({ message: "Festival ajouté !", festival: festival.toJSON() });
     } catch (error) {
         console.error(error);
@@ -101,6 +102,7 @@ exports.getFestivalByAnnee = async (req, res) => {
         if (!festival) {
             return res.json({ find:false,  message: "Festival not found" });
         }
+        
         res.status(200).json({ find:true, festival: festival.toJSON() });
     } catch (error) {
         console.error(error);
@@ -108,27 +110,32 @@ exports.getFestivalByAnnee = async (req, res) => {
     }
 };
 
-exports.getFestivalEnCours = async (req, res) => {
+
+
+exports.getFestivalSelection = async (req, res) => {
     try {
-        const currentDate=new Date()
-        const currentannee=currentDate.getFullYear()
-        const festivalEnCours = await Festival.findOne({
+        const id = req.params.id;
+
+        // Vérifiez si l'ID est défini avant d'effectuer la requête
+        if (!id) {
+            return res.status(400).json({ find: false, message: "Invalid festival ID" });
+        }
+
+        const festival = await Festival.findOne({
             where: {
-                date_fin: {
-                    [Sequelize.Op.gte]: currentDate,
-                },
-                annee: currentannee,
-            },
-            order: [['idfestival', 'DESC']], // Ordonne par ID de manière décroissante
-           
+                idfestival: id
+            }
         });
 
-        if (!festivalEnCours) {
+        console.log(festival);
+
+        if (!festival) {
             res.json({ find: false, message: "Festival not found" });
         } else {
-            res.status(200).json({ find: true, festival: festivalEnCours.toJSON() });
+            res.status(200).json({ find: true, festival: festival });
         }
     } catch (error) {
-        res.status(500).json({ find: false, message: "Erreur serveur" });
+        console.error(error);
+        res.status(500).json({ find: false, message: "Server error", error: error.message });
     }
 };

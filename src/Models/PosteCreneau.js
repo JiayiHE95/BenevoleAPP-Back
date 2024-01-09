@@ -19,6 +19,10 @@ const PosteCreneau = sequelize.define(
       type: DataTypes.INTEGER,
    
     },
+    idfestival: {
+      type: DataTypes.INTEGER,
+   
+    },
     capacite: {
       type: DataTypes.INTEGER,
     },

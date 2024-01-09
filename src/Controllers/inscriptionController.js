@@ -1,5 +1,53 @@
-const {Inscription,Espace, PosteCreneau} = require('../Models/models');
+const {Inscription,Espace,Creneau, PosteCreneau} = require('../Models/models');
 const {Sequelize} = require('sequelize');
+
+
+exports.getRegisteredPeopleByCreneau = async (req, res) => {
+    try {
+
+        
+        const { creneau } = req.body;
+
+        console.log("CRENEAU:", creneau);
+
+        const inscriptions = await Inscription.findAll({
+            where: { idcreneau: creneau.idcreneau, idfestival: creneau.idfestival, idposte:creneau.idposte }
+        });
+
+        if (inscriptions.length === 0) {
+            res.status(200).json({ find: false, inscriptions: inscriptions });
+        } else {
+            res.status(200).json({ find: true, inscriptions: inscriptions });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+}
+
+
+
+
+exports.getInscriptionsOfUserByFestival = async (req, res) => {
+    try {
+        const { iduser, idfestival } = req.params;
+        const inscriptions = await Inscription.findAll({
+            where: { iduser: iduser, idfestival: idfestival }
+            
+        });
+
+        if (inscriptions.length === 0) {
+            res.status(200).json({ find: false, inscriptions: inscriptions });
+        } else {
+            res.status(200).json({ find: true, inscriptions: inscriptions });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+}
+
+
 
 exports.getInscriptionsByUserCreneau = async (req, res) => {
     try {
