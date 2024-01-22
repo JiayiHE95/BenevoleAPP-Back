@@ -121,13 +121,13 @@ CREATE TABLE poste_creneau (
 );
 
 CREATE TABLE inscription (
+   idinscription SERIAL PRIMARY KEY,
    idPoste INTEGER,
    idCreneau INTEGER,
    idUser INTEGER,
    idfestival INTEGER,
    idZoneBenevole INTEGER,
    valide BOOLEAN NOT NULL DEFAULT FALSE,
-   PRIMARY KEY (idPoste, idCreneau, idUser, idZoneBenevole, idfestival),
    FOREIGN KEY (idPoste) REFERENCES poste(idPoste),
    FOREIGN KEY (idCreneau) REFERENCES creneau(idCreneau),
    FOREIGN KEY (idUser) REFERENCES "user"(idUser),
@@ -161,6 +161,15 @@ CREATE TABLE flexible_user_creneau (
     PRIMARY KEY (idUser, idCreneau),
     FOREIGN KEY (idUser) REFERENCES "user"(idUser),
     FOREIGN KEY (idCreneau) REFERENCES creneau(idCreneau)
+);
+
+CREATE TABLE notification (
+    idNotification SERIAL PRIMARY KEY,
+    idUser INTEGER,
+    idFestival INTEGER,
+    label TEXT,
+    FOREIGN KEY (idFestival) REFERENCES festival(idFestival)ON DELETE  CASCADE,
+    FOREIGN KEY (idUser) REFERENCES "user"(idUser)ON DELETE  CASCADE
 );
 
 

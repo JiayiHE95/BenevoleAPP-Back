@@ -12,6 +12,7 @@ const jeuEspaceRoutes = require("./Routes/JeuEspaceRoutes")
 const posteCreneauRoutes = require("./Routes/PosteCreneauRoutes")
 const flexibleRoutes = require("./Routes/FlexibleRoutes")
 const inscriptionRoutes = require("./Routes/InscriptionRoutes")
+const notificationRoutes =require("./Routes/NotificationRoutes")
 //const bcrypt = require('bcrypt');
 //const { createTokens, validateToken} =  require('./middleware/auth')
 
@@ -50,6 +51,7 @@ app.use("/jeu", jeuEspaceRoutes)
 app.use("/poste-creneau", posteCreneauRoutes)
 app.use("/flexible", flexibleRoutes)
 app.use("/inscription", inscriptionRoutes)
+app.use("/notification", notificationRoutes)
 
 
 app.get("/", (req,res)=>{

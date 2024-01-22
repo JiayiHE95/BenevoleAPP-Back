@@ -1,4 +1,4 @@
-const {Inscription,Espace,Creneau, PosteCreneau} = require('../Models/models');
+const {Inscription,Espace,User, Notification, PosteCreneau} = require('../Models/models');
 const {Sequelize} = require('sequelize');
 
 
@@ -7,8 +7,6 @@ exports.getRegisteredPeopleByCreneau = async (req, res) => {
 
         
         const { creneau } = req.body;
-
-        console.log("CRENEAU:", creneau);
 
         const inscriptions = await Inscription.findAll({
             where: { idcreneau: creneau.idcreneau, idfestival: creneau.idfestival, idposte:creneau.idposte }
@@ -27,6 +25,54 @@ exports.getRegisteredPeopleByCreneau = async (req, res) => {
 
 
 
+exports.validateRegistration = async (req, res) => {
+    try {
+        const { idinscription, valide } = req.body;
+        const inscription = await Inscription.findOne({ where: { idinscription: idinscription } });
+        const admin = await User.findOne({ where: { role: 'ADMIN' } });
+
+        if (inscription) {
+            if (valide === true) {
+                inscription.valide = true;
+                await inscription.save();
+
+                await Notification.create({
+                    iduser: admin.iduser,
+                    idfestival: inscription.idfestival,
+                    label: "Un utilisateur a accepté votre proposition de poste, l'inscription a été réalisée"
+                });
+
+                return res.status(200).json({ success: true, message: 'Registration validated successfully' });
+            } else {
+                
+
+                await Notification.create({
+                    iduser: admin.iduser,
+                    idfestival: inscription.idfestival,
+                    label: "Un utilisateur a refusé votre proposition de poste, l'inscription a été supprimée"
+                });
+                await Notification.create({
+                    iduser: inscription.iduser,
+                    idfestival: inscription.idfestival,
+                    label: "Vous avez refusé une proposition de poste, merci de vous réinscrire sur le créneau en flexible si vous souhaitez toujours être flexible à ce créneau"
+                });
+
+               
+                await Inscription.destroy({ where: { idinscription: idinscription } });
+
+                return res.status(200).json({ success: true, message: 'Registration rejected successfully' });
+            }
+        } else {
+            return res.status(404).json({ success: false, message: 'Registration not found' });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+};
+
+
+
 
 exports.getInscriptionsOfUserByFestival = async (req, res) => {
     try {
@@ -35,7 +81,7 @@ exports.getInscriptionsOfUserByFestival = async (req, res) => {
             where: { iduser: iduser, idfestival: idfestival }
             
         });
-
+        console.log(inscriptions);
         if (inscriptions.length === 0) {
             res.status(200).json({ find: false, inscriptions: inscriptions });
         } else {
@@ -68,7 +114,8 @@ exports.getInscriptionsByUserCreneau = async (req, res) => {
 exports.createInscription = async (req, res) => {
  try {
      const { iduser, idcreneau, idfestival, idposte, idzonebenevole } = req.body;
-     console.log(req.body);
+     console.log("j'entre dans la fonction");
+     console.log(idzonebenevole);
 
      if (idzonebenevole == null) {
          console.log("idzonebenevole est null");
@@ -82,6 +129,7 @@ exports.createInscription = async (req, res) => {
              idposte: idposte,
              idfestival: idfestival,
              idzonebenevole: zonebenevole,
+             valide : true
          });
          
 
@@ -89,8 +137,11 @@ exports.createInscription = async (req, res) => {
              { capacite_restante: Sequelize.literal('capacite_restante - 1') },
              { where: { idposte: idposte, idcreneau: idcreneau,idzonebenevole: zonebenevole } }
          );
+         
      }else{
+       
       for (const [idZone, nomZone] of Object.entries(idzonebenevole)) {
+        console.log("j'entre dans la partie object entries");
        const inscription = await Inscription.create({
            iduser: iduser,
            idcreneau: idcreneau,
@@ -98,6 +149,9 @@ exports.createInscription = async (req, res) => {
            idfestival: idfestival,
            idzonebenevole: parseInt(idZone),
        });
+       console.log("j'ai créé inscritpion");
+       
+       
 
        const posteCreneau = await PosteCreneau.update(
         { capacite_restante: Sequelize.literal('capacite_restante - 1') },
@@ -112,6 +166,31 @@ exports.createInscription = async (req, res) => {
      console.error(error);
      res.status(500).json({ created: false, message: "Erreur serveur" });
  }
+}
+
+// admin inscrit benevole
+exports.createInscription2 = async (req, res) => {
+    try {
+        const { iduser, idcreneau, idfestival, idposte, idzonebenevole } = req.body;
+          const inscription = await Inscription.create({
+              iduser: iduser,
+              idcreneau: idcreneau,
+              idposte: idposte,
+              idfestival: idfestival,
+              idzonebenevole:idzonebenevole,
+              
+          });
+   
+          const posteCreneau = await PosteCreneau.update(
+           { capacite_restante: Sequelize.literal('capacite_restante - 1') },
+           { where: { idposte: idposte, idcreneau: idcreneau,idzonebenevole: idzonebenevole } }
+       );
+   
+        res.status(200).json({ created: true, message: "Inscriptions created successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ created: false, message: "Erreur serveur" });
+    }
 }
 
 

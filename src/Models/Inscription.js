@@ -4,25 +4,25 @@ const sequelize = require('../config/database');
 const Inscription = sequelize.define(
   'Inscription',
   {
-    idposte: {
+    idinscription: {
       type: DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true
+    },
+    idposte: {
+      type: DataTypes.INTEGER,
     },
     idcreneau: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
     },
     iduser: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
     },
     idzonebenevole: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
     }   , 
     idfestival : {
       type: DataTypes.INTEGER,
-      primaryKey: true,
     } ,
     valide: {
       type: DataTypes.BOOLEAN,

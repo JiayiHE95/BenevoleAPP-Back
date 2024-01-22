@@ -1,4 +1,4 @@
-const { User, FlexibleUserCreneau } = require('../Models/models');
+const { User, FlexibleUserCreneau,Notification } = require('../Models/models');
 
 
 exports.getAllFlexibleUserCreneau = async (req, res) => {
@@ -27,9 +27,14 @@ exports.createFlexibleUserCreneau = async (req, res) => {
 
 exports.deleteFlexibleUserCreneau = async (req, res) => {
     try {
-        const { iduser, idcreneau } = req.body;
+        const { iduser, idcreneau, idfestival } = req.body;
         const flexibleUserCreneau = await FlexibleUserCreneau.destroy({
             where: { iduser: iduser, idcreneau: idcreneau }
+        });
+        const notification = await Notification.create({
+            iduser: iduser,
+            idfestival: idfestival,
+            label: "Vous avez une proposition de poste en attente de validation"
         });
         res.status(200).json({ deleted : true, flexibleUserCreneau: flexibleUserCreneau });
     } catch (error) {
