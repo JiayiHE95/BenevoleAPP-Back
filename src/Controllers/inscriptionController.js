@@ -57,9 +57,12 @@ exports.validateRegistration = async (req, res) => {
                     label: "Vous avez refusé une proposition de poste, merci de vous réinscrire sur le créneau en flexible si vous souhaitez toujours être flexible à ce créneau"
                 });
 
-               
+                const inscription2 = await Inscription.findOne({ where: { idinscription: idinscription } });
+                const posteCreneau = await PosteCreneau.findOne({ where: { idposte: inscription2.idposte, idcreneau: inscription2.idcreneau } });
+                posteCreneau.capacite_restante = posteCreneau.capacite_restante + 1;
+                await posteCreneau.save();
                 await Inscription.destroy({ where: { idinscription: idinscription } });
-
+                
                 return res.status(200).json({ success: true, message: 'Registration rejected successfully' });
             }
         } else {

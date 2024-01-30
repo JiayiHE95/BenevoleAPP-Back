@@ -31,11 +31,17 @@ exports.deleteFlexibleUserCreneau = async (req, res) => {
         const flexibleUserCreneau = await FlexibleUserCreneau.destroy({
             where: { iduser: iduser, idcreneau: idcreneau }
         });
-        const notification = await Notification.create({
+
+        if (idfestival){
+
+            const notification = await Notification.create({
             iduser: iduser,
             idfestival: idfestival,
             label: "Vous avez une proposition de poste en attente de validation"
         });
+
+        }
+        
         res.status(200).json({ deleted : true, flexibleUserCreneau: flexibleUserCreneau });
     } catch (error) {
         console.error(error);

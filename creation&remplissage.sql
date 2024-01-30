@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS creneau CASCADE;
 DROP TABLE IF EXISTS jeu CASCADE;
 DROP TABLE IF EXISTS poste CASCADE;
 DROP TABLE IF EXISTS espace CASCADE;
-
+DROP TABLE IF EXISTS notification CASCADE;
 
 CREATE TABLE "user" (
     idUser SERIAL PRIMARY KEY,
@@ -59,7 +59,7 @@ CREATE TABLE creneau (
     heure_fin TIME NOT NULL,
     intervalle INTEGER NOT NULL DEFAULT 2,
     idFestival INTEGER,
-    FOREIGN KEY (idFestival) REFERENCES festival(idFestival)ON DELETE  CASCADE
+    FOREIGN KEY (idFestival) REFERENCES festival(idFestival)ON DELETE CASCADE
 );
 
 CREATE TABLE jeu (
