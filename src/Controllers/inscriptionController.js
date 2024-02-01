@@ -225,3 +225,27 @@ exports.deleteInscription = async (req, res) => {
         res.status(500).json({ deleted : false, message: "Erreur serveur" });
     }
 }
+
+exports.getInscriptionsByFestival = async (req, res) => {
+    console.log("je suis dans la fonction getInscriptionsByFestival");
+    try {
+        const { idfestival } = req.params;
+        const inscriptions = 
+        await User.findAll({
+            include: [
+              {
+                model: Inscription,
+                where: { idfestival: idfestival },
+              },
+            ],
+          });
+        if(inscriptions.length==0){
+            res.status(200).json({ find : false,inscriptions: inscriptions });
+        }else{
+         res.status(200).json({ find : true,inscriptions: inscriptions });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+}

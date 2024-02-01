@@ -10,4 +10,6 @@ router.post('/create', posteController.createPoste)
 router.get('/allpostes', posteController.getAllPostes)
 router.get('/one', posteController.getOnePosteById)
 
+router.post('/update', posteController.updatePoste)
+
 module.exports = router;

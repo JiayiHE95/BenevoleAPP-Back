@@ -59,3 +59,26 @@ exports.getOnePosteById = async (req, res) => {
         res.status(500).json({ message: "Erreur serveur" });
     }
 };
+
+exports.updatePoste = async (req, res) => {
+    const { idposte, description } = req.body;
+
+    try {
+        // Check if the poste with the given ID exists
+        const poste = await Poste.findOne({ where: { idposte: idposte } });
+        if (!poste) {
+            return res.status(404).json({ message: "Poste not found" });
+        }
+
+        if (description !== undefined) {
+            poste.description = description;
+        }
+
+        await poste.save();
+
+        res.status(200).json({ message: "Poste updated successfully", poste: poste.toJSON() });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+}

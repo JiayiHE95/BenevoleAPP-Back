@@ -10,4 +10,5 @@ router.get('/get-by-user/:iduser/:idcreneau', inscriptionController.getInscripti
 router.get('/user/:iduser/:idfestival',inscriptionController.getInscriptionsOfUserByFestival)
 router.post('/registered',inscriptionController.getRegisteredPeopleByCreneau)
 router.post('/validation',inscriptionController.validateRegistration)
+router.get('/get-by-festival/:idfestival',inscriptionController.getInscriptionsByFestival)
 module.exports = router;
