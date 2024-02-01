@@ -137,11 +137,11 @@ CREATE TABLE inscription (
 
 CREATE TABLE supervision (
     idUser INTEGER,
-    idZoneBenevole INTEGER,
+    idPoste INTEGER,
     idFestival INTEGER,
-    PRIMARY KEY (idZoneBenevole, idUser, idFestival),
+    PRIMARY KEY (idPoste, idUser, idFestival),
     FOREIGN KEY (idUser) REFERENCES "user"(idUser),
-    FOREIGN KEY (idZoneBenevole) REFERENCES espace(idZoneBenevole),
+    FOREIGN KEY (idPoste) REFERENCES poste(idPoste),
     FOREIGN KEY (idFestival) REFERENCES festival(idFestival) ON DELETE CASCADE
 );
 

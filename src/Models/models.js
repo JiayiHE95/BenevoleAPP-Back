@@ -42,9 +42,9 @@ Creneau.belongsTo(Festival,{foreignKey: {name: 'idfestival', allowNull: false}})
 Festival.hasMany(PosteCreneau, {foreignKey: { name: 'idfestival', allowNull: false }, onDelete: 'CASCADE' })
 PosteCreneau.belongsTo(Festival,{foreignKey: {name: 'idfestival', allowNull: false}})
 
-// Relation Espace Supervision
-Espace.hasMany(Supervision,{foreignKey: { name: 'idzonebenevole', allowNull: false }, onDelete: 'CASCADE' })
-Supervision.belongsTo(Espace,{foreignKey:{name: 'idzonebenevole', allowNull: false}})
+// Relation Poste Supervision
+Poste.hasMany(Supervision,{foreignKey: { name: 'idposte', allowNull: false }, onDelete: 'CASCADE' })
+Supervision.belongsTo(Poste,{foreignKey:{name: 'idposte', allowNull: false}})
 
 // Relation User Supervision
 User.hasMany(Supervision,{foreignKey: { name: 'iduser', allowNull: false }, onDelete: 'CASCADE' })

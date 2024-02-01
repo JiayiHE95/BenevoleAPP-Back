@@ -8,7 +8,7 @@ const Supervision = sequelize.define(
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    idzonebenevole: {
+    idposte: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },

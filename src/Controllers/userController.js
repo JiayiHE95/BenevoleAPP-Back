@@ -9,7 +9,26 @@ const handlebars = require('handlebars')
 const fs = require('fs')
 const { Op } = require('sequelize');
 
+exports.searchUsers = async (req, res) => {
+  try {
+    const { searchQuery } = req.body;
+    
+    // Utilisez Sequelize pour rechercher les utilisateurs
+    const users = await User.findAll({
+      where: {
+        [Op.or]: [
+          { pseudo: { [Op.iLike]: `%${searchQuery}%` } }, // Recherche insensible à la casse
+          { mail: { [Op.iLike]: `%${searchQuery}%` } },
+        ],
+      },
+    });
 
+    res.status(200).json({ users });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};
 
 exports.createUser = async(req, res) =>{
   const {pseudo,nom,prenom,tel,mail,association,taille_tshirt,est_vegetarien,hebergement,jeu_prefere,mdp} = req.body
