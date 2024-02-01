@@ -1,5 +1,6 @@
 const express = require('express');
 const { Creneau,Poste,PosteCreneau,Inscription, FlexibleUserCreneau } = require('../Models/models');
+const { Op } = require('sequelize');
 
 
 exports.getAllPostsCreneux = async (req, res) => {
@@ -153,6 +154,7 @@ exports.getAllPostsByFestivals = async (req, res) => {
       const poste = await Poste.findOne({ where: { idposte: id } });
       postes.push(poste);
     }
+    postes.sort((a, b) => a.idposte - b.idposte);
 
     res.status(200).json({ postes });
   } catch (error) {
@@ -181,3 +183,33 @@ exports.getCreneauxByFestival = async (req, res) => {
   }
 }
 
+
+exports.updateHoraire = async (req, res) => {
+  try {
+    const { idfestival, jour, heure_debut, heure_fin, newHeure_debut, newHeure_fin } = req.body;
+    const heure_debut_with_seconds = heure_debut + ":00";
+    const heure_fin_with_seconds = heure_fin + ":00";
+
+    const creneau = await Creneau.findOne({
+      where: {
+        idfestival: idfestival,
+        jour:{ [Op.gte]: new Date(jour) },
+        heure_debut: heure_debut_with_seconds,
+        heure_fin: heure_fin_with_seconds,
+      },
+    });
+
+    if (creneau) {
+      
+      creneau.heure_debut = newHeure_debut+":00";
+      creneau.heure_fin = newHeure_fin+":00";
+      await creneau.save();
+      res.status(200).json({ success: true, message: 'Horaire mis à jour' });
+    } else {
+      res.status(404).json({ success: false, message: 'Créneau non trouvé' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+}
