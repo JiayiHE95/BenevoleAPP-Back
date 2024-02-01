@@ -34,6 +34,10 @@ exports.addReferent = async (req, res) => {
   
       // Check if the operation was successful
       if (supervision) {
+        const notification = await Notification.create({
+          iduser: iduser,
+          idfestival: idfestival,
+          label: "Vous avez été promu référent"})
         // Successful creation, respond with 201 Created status
         res.status(201).json({ message: 'Referent added successfully', supervision: supervision });
       } else {
