@@ -25,16 +25,15 @@ exports.createFestival = async (req, res) => {
 
 
 exports.deleteFestival = async (req, res) => {
-    const { nom } = req.body;
+    const { idfestival } = req.body;
 
     try {
         // Check if the festival with the given ID exists
-        const festival = await Festival.findOne({ where: { nom: nom } });
+        const festival = await Festival.findOne({ where: { idfestival: idfestival } });
         if (!festival) {
             return res.status(404).json({ message: "Festival not found" });
         }
 
-        // Delete the festival
         await festival.destroy();
 
         res.status(200).json({ message: "Festival deleted successfully" });
