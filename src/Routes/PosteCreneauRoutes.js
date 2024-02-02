@@ -10,5 +10,7 @@ router.get('/get-creneaux-by-festival/:idfestival', posteCreneauController.getCr
 router.get('/get-poste-by-festival/:idfestival', posteCreneauController.getAllPostsByFestivals)
 
 router.post('/update-horaire', posteCreneauController.updateHoraire)
+
+router.post('/get-by-zone-festival', posteCreneauController.getPostesCreneauxByZoneFestival)
 module.exports = router;
 

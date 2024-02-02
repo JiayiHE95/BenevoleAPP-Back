@@ -8,8 +8,15 @@ exports.getRegisteredPeopleByCreneau = async (req, res) => {
         
         const { creneau } = req.body;
 
+        console.log(creneau);
+
         const inscriptions = await Inscription.findAll({
-            where: { idcreneau: creneau.idcreneau, idfestival: creneau.idfestival, idposte:creneau.idposte }
+            where: { 
+                idcreneau: creneau.idcreneau, 
+                idfestival: creneau.idfestival, 
+                idposte:creneau.idposte,
+                idzonebenevole:creneau.idzonebenevole 
+            }
         });
 
         if (inscriptions.length === 0) {

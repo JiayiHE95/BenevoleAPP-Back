@@ -213,3 +213,30 @@ exports.updateHoraire = async (req, res) => {
     res.status(500).json({ success: false, message: 'Erreur serveur' });
   }
 }
+
+exports.getPostesCreneauxByZoneFestival = async (req, res) => {
+  const { idfestival, idzonebenevole, idcreneau } = req.body;
+  console.log(req.body);
+  try {
+    const creneaux = await PosteCreneau.findOne({
+      include: [
+        {
+            model: Creneau,
+            where: { idfestival: idfestival },
+            order: [['jour', 'ASC'], ['heure_debut', 'ASC']],
+        },
+        {
+            model: Poste,
+            order: [['idposte', 'ASC']],
+        }
+    ],
+    where: { idzonebenevole: idzonebenevole, idcreneau: idcreneau },
+    order: [['idcreneau', 'ASC']],
+    });
+
+    res.status(200).json({ find: true, posteCreneau: creneaux });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ find : false, message: 'Erreur serveur' });
+  }
+}
