@@ -133,6 +133,9 @@ exports.getInscriptionsOfUserByFestival = async (req, res) => {
                 },
                 {
                     model: Espace,
+                },
+                {  
+                    model: User,
                 }
             ],
             
@@ -283,15 +286,24 @@ exports.getInscriptionsByFestival = async (req, res) => {
     console.log("je suis dans la fonction getInscriptionsByFestival");
     try {
         const { idfestival } = req.params;
-        const inscriptions = 
-        await User.findAll({
+        const inscriptions = await Inscription.findAll({
+            where: { idfestival: idfestival },
             include: [
-              {
-                model: Inscription,
-                where: { idfestival: idfestival },
-              },
+                {
+                   model: Creneau,
+                },
+                {   
+                    model: Poste,
+                },
+                {
+                    model: Espace,
+                },
+                {  
+                    model: User,
+                }
             ],
-          });
+            
+        });
         if(inscriptions.length==0){
             res.status(200).json({ find : false,inscriptions: inscriptions });
         }else{
