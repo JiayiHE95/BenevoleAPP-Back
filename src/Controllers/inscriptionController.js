@@ -123,10 +123,20 @@ exports.getInscriptionsOfUserByFestival = async (req, res) => {
     try {
         const { iduser, idfestival } = req.params;
         const inscriptions = await Inscription.findAll({
-            where: { iduser: iduser, idfestival: idfestival }
+            where: { iduser: iduser, idfestival: idfestival },
+            include: [
+                {
+                   model: Creneau,
+                },
+                {   
+                    model: Poste,
+                },
+                {
+                    model: Espace,
+                }
+            ],
             
         });
-        console.log(inscriptions);
         if (inscriptions.length === 0) {
             res.status(200).json({ find: false, inscriptions: inscriptions });
         } else {
