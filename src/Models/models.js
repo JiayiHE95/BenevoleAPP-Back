@@ -77,6 +77,13 @@ Inscription.belongsTo(PosteCreneau, { foreignKey: 'idcreneau' });
 Espace.hasMany(Inscription, { foreignKey: 'idzonebenevole', onDelete: 'CASCADE' });
 Inscription.belongsTo(Espace, { foreignKey: 'idzonebenevole' });
 
+// Relation Poste Inscription
+Poste.hasMany(Inscription, { foreignKey: 'idposte', onDelete: 'CASCADE' });
+Inscription.belongsTo(Poste, { foreignKey: 'idposte' });
+
+//Relation Creneau inscription
+Creneau.hasMany(Inscription, { foreignKey: 'idcreneau', onDelete: 'CASCADE' });
+Inscription.belongsTo(Creneau, { foreignKey: 'idcreneau' });
 
 // Relation User FlexibleUserCreneau
 User.hasMany(FlexibleUserCreneau,{foreignKey: { name: 'iduser', allowNull: false }, onDelete: 'CASCADE' })

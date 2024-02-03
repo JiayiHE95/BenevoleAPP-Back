@@ -1,4 +1,4 @@
-const {Inscription,Espace,User, Notification, PosteCreneau} = require('../Models/models');
+const {Inscription,Espace,User, Notification, PosteCreneau, Creneau, Poste} = require('../Models/models');
 const {Sequelize} = require('sequelize');
 
 
@@ -36,15 +36,44 @@ exports.getRegisteredPeopleByCreneau = async (req, res) => {
     }
 }
 
-
+const formatDate = (inputDate) => {
+    const dateObject = new Date(inputDate);
+   
+    const joursSemaine = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+    const jourSemaine = joursSemaine[dateObject.getDay()];
+   
+    const jour = String(dateObject.getDate()).padStart(2, '0');
+    const mois = String(dateObject.getMonth() + 1).padStart(2, '0');
+    const annee = dateObject.getFullYear();
+   
+    const formattedDate = `${jourSemaine} ${jour}/${mois}/${annee}`;
+   
+    return formattedDate;
+};
 
 exports.validateRegistration = async (req, res) => {
     try {
         const { idinscription, valide } = req.body;
-        const inscription = await Inscription.findOne({ where: { idinscription: idinscription } });
+        const inscription = await Inscription.findOne({ 
+            where: { idinscription: idinscription },
+            include: [
+                {
+                    model: User,
+                },
+                {
+                    model: Creneau,
+                },
+                {   
+                    model: Poste,
+                }
+            ] 
+        });
         const admin = await User.findOne({ where: { role: 'ADMIN' } });
-
+        
         if (inscription) {
+            const username= `${inscription.User.prenom} ${inscription.User.nom} (${inscription.User.pseudo})`
+            const jour= formatDate(inscription.Creneau.jour);
+            const poste =`${inscription.Poste.nom} (${jour}, de ${inscription.Creneau.heure_debut} à ${inscription.Creneau.heure_fin})`
             if (valide === true) {
                 inscription.valide = true;
                 await inscription.save();
@@ -52,7 +81,7 @@ exports.validateRegistration = async (req, res) => {
                 await Notification.create({
                     iduser: admin.iduser,
                     idfestival: inscription.idfestival,
-                    label: "Un utilisateur a accepté votre proposition de poste, l'inscription a été réalisée"
+                    label: `Utilisateur ${username} a accepté votre proposition de poste, l'inscription a été réalisée pour le poste ${poste}`
                 });
 
                 return res.status(200).json({ success: true, message: 'Registration validated successfully' });
@@ -62,7 +91,7 @@ exports.validateRegistration = async (req, res) => {
                 await Notification.create({
                     iduser: admin.iduser,
                     idfestival: inscription.idfestival,
-                    label: "Un utilisateur a refusé votre proposition de poste, l'inscription a été supprimée"
+                    label: `Utilisateur ${username} a refusé votre proposition de poste, l'inscription a été supprimée pour le poste ${poste}`
                 });
                 await Notification.create({
                     iduser: inscription.iduser,
