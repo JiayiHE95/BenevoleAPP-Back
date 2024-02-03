@@ -158,6 +158,7 @@ exports.createInscription = async (req, res) => {
            idposte: idposte,
            idfestival: idfestival,
            idzonebenevole: parseInt(idZone),
+           valide : true
        });
        console.log("j'ai créé inscritpion");
        
