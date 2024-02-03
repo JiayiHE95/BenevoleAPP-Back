@@ -16,7 +16,13 @@ exports.getRegisteredPeopleByCreneau = async (req, res) => {
                 idfestival: creneau.idfestival, 
                 idposte:creneau.idposte,
                 idzonebenevole:creneau.idzonebenevole 
-            }
+            },
+            include: [
+                {
+                    model: User,
+                },
+            ],
+
         });
 
         if (inscriptions.length === 0) {
