@@ -51,6 +51,10 @@ const formatDate = (inputDate) => {
     return formattedDate;
 };
 
+const formatHeure = (heure) => {
+    return heure.split(":").slice(0, 2).join(":");
+  }
+
 exports.validateRegistration = async (req, res) => {
     try {
         const { idinscription, valide } = req.body;
@@ -73,7 +77,7 @@ exports.validateRegistration = async (req, res) => {
         if (inscription) {
             const username= `${inscription.User.prenom} ${inscription.User.nom} (${inscription.User.pseudo})`
             const jour= formatDate(inscription.Creneau.jour);
-            const poste =`${inscription.Poste.nom} (${jour}, de ${inscription.Creneau.heure_debut} à ${inscription.Creneau.heure_fin})`
+            const poste =`${inscription.Poste.nom} (${jour}, de ${formatHeure(inscription.Creneau.heure_debut)} à ${formatHeure(inscription.Creneau.heure_fin)})`
             if (valide === true) {
                 inscription.valide = true;
                 await inscription.save();

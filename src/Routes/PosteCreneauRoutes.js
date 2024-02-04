@@ -13,5 +13,7 @@ router.get('/get-poste-by-festival/:idfestival',validateToken, posteCreneauContr
 router.post('/update-horaire',validateToken, posteCreneauController.updateHoraire)
 
 router.post('/get-by-zone-festival',validateToken, posteCreneauController.getPostesCreneauxByZoneFestival)
+
+router.post('/update-capacite',validateToken, posteCreneauController.updateCapacite)
 module.exports = router;
 

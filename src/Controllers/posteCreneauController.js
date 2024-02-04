@@ -240,3 +240,47 @@ exports.getPostesCreneauxByZoneFestival = async (req, res) => {
     res.status(500).json({ find : false, message: 'Erreur serveur' });
   }
 }
+
+exports.updateCapacite = async (req, res) => {
+  try {
+    const { idcreneau, capacite, idposte, idfestival } = req.body;
+    const posteCreneau = await PosteCreneau.findOne({
+      where: {
+        idcreneau: idcreneau,
+        idposte: idposte,
+        idfestival: idfestival,
+      },
+    });
+
+    if (posteCreneau) {
+      const oldCapacite = posteCreneau.toJSON().capacite;
+      const augmentation= capacite - oldCapacite;
+      posteCreneau.capacite = capacite;
+      posteCreneau.capacite_restante = posteCreneau.capacite_restante + augmentation;
+      await posteCreneau.save();
+
+      const newPosteCreneau = await PosteCreneau.findOne({
+        where: {
+          idcreneau: idcreneau,
+          idposte: idposte,
+          idfestival: idfestival,
+        },
+        include: [
+          {
+            model: Creneau,
+          },
+          {
+            model: Poste,
+          },
+        ],
+      });
+      res.status(200).json({ success: true, posteCreneau:newPosteCreneau, message: 'Capacité mise à jour' });
+    } else {
+      res.status(404).json({ success: false, message: 'PosteCréneau non trouvé' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+
+}
