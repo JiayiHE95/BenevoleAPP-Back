@@ -25,6 +25,10 @@ const formatDate = (inputDate) => {
    
     return formattedDate;
 };
+
+const formatHeure = (heure) => {
+    return heure.split(":").slice(0, 2).join(":");
+}
    
 
 exports.createFlexibleUserCreneau = async (req, res) => {
@@ -50,7 +54,7 @@ exports.createFlexibleUserCreneau = async (req, res) => {
         const username= `${flexibleUserCreneau.User.prenom} ${flexibleUserCreneau.User.nom} (${flexibleUserCreneau.User.pseudo})`
         const admin = await User.findOne({ where: { role: 'ADMIN' } });
         const jour = formatDate(flexibleUserCreneau.Creneau.jour);
-        const creneau =`${jour}, de ${flexibleUserCreneau.Creneau.heure_debut} à ${flexibleUserCreneau.Creneau.heure_fin}`
+        const creneau =`${jour}, de ${formatHeure(flexibleUserCreneau.Creneau.heure_debut)} à ${formatHeure(flexibleUserCreneau.Creneau.heure_fin)}`
 
         await Notification.create({
             iduser: admin.iduser,
