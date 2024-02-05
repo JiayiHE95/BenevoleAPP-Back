@@ -6,7 +6,7 @@ const fileController = require('../Controllers/fileController')
 const router = express.Router()
 
 
-router.post('/import-data',validateToken, fileController.importFileToDB)
+router.post('/import-data',fileController.importFileToDB)
 
 
 module.exports = router;

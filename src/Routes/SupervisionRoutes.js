@@ -6,8 +6,8 @@ const {validateToken} = require('../middleware/auth')
 const router = express.Router()
 
 
-router.post('/getByPoste',validateToken, supervisionController.getReferentByPoste)
-router.post('/addReferent',validateToken, supervisionController.addReferent)
+router.post('/getByPoste' , supervisionController.getReferentByPoste)
+router.post('/addReferent' , supervisionController.addReferent)
 
 
 module.exports = router;
