@@ -53,7 +53,7 @@ const formatDate = (inputDate) => {
 
 const formatHeure = (heure) => {
     return heure.split(":").slice(0, 2).join(":");
-  }
+}
 
 exports.validateRegistration = async (req, res) => {
     try {

@@ -95,7 +95,7 @@ exports.getAllFestivals = async (req, res) => {
 
 exports.getFestivalByAnnee = async (req, res) => {
     const {annee} = req.params
-    console.log(annee)
+
     try {
         const festival = await Festival.findOne({ where: { annee: annee } });
         if (!festival) {
@@ -125,8 +125,6 @@ exports.getFestivalSelection = async (req, res) => {
                 idfestival: id
             }
         });
-
-        console.log(festival);
 
         if (!festival) {
             res.json({ find: false, message: "Festival not found" });
