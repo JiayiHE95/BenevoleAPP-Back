@@ -149,7 +149,7 @@ exports.login = async(req, res)=>{
         if (response){
           const iduser=data.iduser
           const token=jwt.sign({iduser},"jwtSecret",{
-            expiresIn:1000,
+            expiresIn:10000,
           })
           res.send({auth:true, token:token, user:data})
         }else{
@@ -223,7 +223,7 @@ exports.passwordForgot=async(req,res)=>{
   }).then((data)=>{
     if (data){
       const token=jwt.sign({mail},"passwordForgot",{
-        expiresIn:5000,
+        expiresIn:10000,
       })
       User.update({ reset_password_token: token }, { where: { mail: mail } })
       const transporter = nodemailer.createTransport({

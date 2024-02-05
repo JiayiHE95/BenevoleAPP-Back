@@ -30,15 +30,14 @@ CREATE TABLE "user" (
 
 
 INSERT INTO public."user" (pseudo, nom, prenom, mdp, tel, mail,taille_tshirt, role)
-VALUES ('chachou', 'Morchipont', 'Charlene', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123', 'charlene.morchipont@etu.umontpellier.fr','M', 'ADMIN');
+VALUES ('Chachou', 'Morchipont', 'Charlene', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123456789', 'charlene.morchipont@etu.umontpellier.fr','M', 'ADMIN');
 
 INSERT INTO public."user" (pseudo, nom, prenom, mdp, tel, mail,taille_tshirt, role)
-VALUES ('jiayi', 'He', 'Jiayi', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123', 'jiayi.he@etu.umontpellier.fr','XS', 'BENEVOLE');
+VALUES ('Jiayou', 'He', 'Jiayi', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123456789', 'jiayi.he@etu.umontpellier.fr','XS', 'BENEVOLE');
 
 
 INSERT INTO public."user" (pseudo, nom, prenom, mdp, tel, mail,taille_tshirt, role)
-VALUES ('benevole1', 'He', 'Jiayi', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123', 'test@etu.umontpellier.fr','XS', 'BENEVOLE');
-
+VALUES ('Jadore-SE', 'Deloire', 'Alexandre', '$2b$10$zX2yTtTu4twCKG8ru5uXIefsr5de6YeqCMef4qUZs5LLLhARHKKxW', '123456789', 'test@etu.umontpellier.fr','XS', 'BENEVOLE');
 
 
 CREATE TABLE festival ( 
