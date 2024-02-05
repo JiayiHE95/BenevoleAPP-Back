@@ -2,6 +2,16 @@ const jwt = require("jsonwebtoken")
 const{ sign, verify } = require('jsonwebtoken')
 
 
+// authMiddleware.js
+
+const handle401Error = (err, req, res, next) => {
+    if (err.status === 401) {
+        return res.status(401).json({ message: 'Unauthorized access' });
+    }
+    next(err);
+};
+
+
 
 const validateToken = (req, res, next) => {
     try {
@@ -22,4 +32,4 @@ const validateToken = (req, res, next) => {
 };
 
 
-module.exports={ validateToken}
+module.exports={ validateToken, handle401Error}

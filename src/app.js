@@ -2,7 +2,7 @@ const express = require("express")
 const helmet = require("helmet")
 const cors = require("cors")
 const bodyParser = require('body-parser');
-
+const {handle401Error} = require('./middleware/auth')
 const festivalRoutes = require("./Routes/FestivalRoutes") 
 const posteRoutes = require("./Routes/PosteRoutes") 
 const userRoutes = require("./Routes/UserRoutes")
@@ -39,7 +39,7 @@ app.use(function(req, res, next) {
     );
     next();
    });
-
+app.use(handle401Error);
 // Exporte le module app pour l'utiliser dans d'autres fichiers (server.js)
 app.use(express.urlencoded({extended: true})) // Permet de lire les données des strings dans les requêtes entrantes 
 

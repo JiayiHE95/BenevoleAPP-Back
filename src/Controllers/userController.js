@@ -149,7 +149,7 @@ exports.login = async(req, res)=>{
         if (response){
           const iduser=data.iduser
           const token=jwt.sign({iduser},"jwtSecret",{
-            expiresIn:5000,
+            expiresIn:1000,
           })
           res.send({auth:true, token:token, user:data})
         }else{
