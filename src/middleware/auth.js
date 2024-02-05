@@ -6,6 +6,8 @@ const validateToken = (req, res, next)=>{
     try{
         
         const accessToken = req.headers.authorization.split(' ')[1];
+        console.log(req.headers.authorization.split(' '))
+        console.log(jwt.decode(accessToken));
 
         const decodedToken = jwt.verify(accessToken, "jwtSecret");
         const iduser = decodedToken.iduser; 
@@ -17,6 +19,7 @@ const validateToken = (req, res, next)=>{
         
         next();
     } catch (err){
+        console.error("Error verifying token:", err);
         return res.status(401).json({error: err});
     }
 }

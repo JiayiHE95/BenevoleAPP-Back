@@ -18,6 +18,6 @@ router.get("/check-pw-token" , userController.verifyPWToken);
 router.post("/password-forgot" , userController.passwordForgot);
 router.post("/password-reset" , userController.passwordReset);
 router.post("/password-check" , userController.verifyPassword);
-router.post('/searchQuery' , userController.searchUsers);
+router.post('/searchQuery' , validateToken, userController.searchUsers);
 
 module.exports = router;

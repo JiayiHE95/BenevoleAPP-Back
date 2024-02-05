@@ -5,11 +5,11 @@ const {validateToken} = require('../middleware/auth')
 
 const router = express.Router()
 
-router.get('/get-festival-by-annee/:annee', festivalController.getFestivalByAnnee)
-router.post('/create',festivalController.createFestival)
-router.post('/delete',festivalController.deleteFestival)
-router.get('/all',festivalController.getAllFestivals)
-router.get('/:id',festivalController.getFestivalSelection)
-router.post('/update',festivalController.updateFestival)
+router.get('/get-festival-by-annee/:annee', validateToken, festivalController.getFestivalByAnnee)
+router.post('/create', validateToken,festivalController.createFestival)
+router.post('/delete', validateToken,festivalController.deleteFestival)
+router.get('/all', validateToken,festivalController.getAllFestivals)
+router.get('/:id', validateToken,festivalController.getFestivalSelection)
+router.post('/update', validateToken,festivalController.updateFestival)
 
 module.exports = router;
