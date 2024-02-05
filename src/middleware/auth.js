@@ -2,34 +2,38 @@ const jwt = require("jsonwebtoken")
 const{ sign, verify } = require('jsonwebtoken')
 
 
-// authMiddleware.js
-
-const handle401Error = (err, req, res, next) => {
-    if (err.status === 401) {
-        return res.status(401).json({ message: 'Unauthorized access' });
-    }
-    next(err);
-};
-
-
-
-const validateToken = (req, res, next) => {
-    try {
+const validateToken = (req, res, next)=>{
+    try{
+        
         const accessToken = req.headers.authorization.split(' ')[1];
+<<<<<<< HEAD
+        console.log("coucou")
+        console.log(req.headers.authorization)
+        console.log("coucou2")
+        console.log(req.headers.authorization.split(' '))
+=======
+        console.log(req.headers.authorization.split(' '))
+        console.log(jwt.decode(accessToken));
+
+>>>>>>> 48b0311ab4235176dc2a02034facfd66f65bf41f
         const decodedToken = jwt.verify(accessToken, "jwtSecret");
-        const iduser = decodedToken.iduser;
+
+        console.log(decodedToken)
+
+
+        const iduser = decodedToken.iduser; 
 
         req.auth = {
             iduser: iduser
         };
-        console.log("auth.js: " + req.auth.iduser + " sent a request");
-
+        console.log("auth.js: " + req.auth.iduser + " sent a request")
+        
         next();
-    } catch (err) {
-        console.error("Error in validateToken middleware:", err);
-        return res.status(401).json({ error: "Unauthorized" });
+    } catch (err){
+        console.error("Error verifying token:", err);
+        return res.status(401).json({error: err});
     }
-};
+}
 
 
-module.exports={ validateToken, handle401Error}
+module.exports={ validateToken }

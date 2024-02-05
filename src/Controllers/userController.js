@@ -149,7 +149,11 @@ exports.login = async(req, res)=>{
         if (response){
           const iduser=data.iduser
           const token=jwt.sign({iduser},"jwtSecret",{
-            expiresIn:10000,
+<<<<<<< HEAD
+            expiresIn:1000,
+=======
+            expiresIn:5000,
+>>>>>>> 48b0311ab4235176dc2a02034facfd66f65bf41f
           })
           res.send({auth:true, token:token, user:data})
         }else{
@@ -236,7 +240,8 @@ exports.passwordForgot=async(req,res)=>{
 
       const emailTemplate = fs.readFileSync('Template/reset-pw.html', 'utf8')
       const compiledTemplate = handlebars.compile(emailTemplate)
-      const url=process.env.URL || "http://localhost:3000/"
+      //const url=process.env.URL || "http://localhost:3000/"
+      const url=process.env.URL || "https://benevole-app-front.onrender.com/"
       const html = compiledTemplate({ resetPasswordLink: `${url}reset-password/${token}` });
 
       const mailOptions = {
