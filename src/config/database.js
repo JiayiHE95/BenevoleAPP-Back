@@ -8,7 +8,7 @@ const { Sequelize } = require("sequelize")
 const username = process.env.DB_USERNAME || "benevole_app_bd_user";
 const password = process.env.DB_PASSWORD || "9t2HHayiIYldQqeah6Vf3as80UepU7g4";
 const database = process.env.DB_NAME || "benevole_app_bd";
-const host = process.env.DB_HOST || "benevole-app-bd.postgres.database.azure.com";
+const host = process.env.DB_HOST || "dpg-cn0ifqnqd2ns73chfr10-a.frankfurt-postgres.render.com";
 
 
 {/*
