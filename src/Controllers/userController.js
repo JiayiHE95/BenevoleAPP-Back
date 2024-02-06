@@ -238,7 +238,7 @@ exports.passwordForgot=async(req,res)=>{
       const emailTemplate = fs.readFileSync('Template/reset-pw.html', 'utf8')
       const compiledTemplate = handlebars.compile(emailTemplate)
       //const url=process.env.URL || "http://localhost:3000/"
-      const url=process.env.URL || "https://benevole-app-front.onrender.com/"
+      const url=process.env.URL || "https://benevole-app-back.onrender.com/"
       const html = compiledTemplate({ resetPasswordLink: `${url}reset-password/${token}` });
 
       const mailOptions = {
