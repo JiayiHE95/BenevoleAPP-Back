@@ -53,10 +53,13 @@ app.use("/inscription", inscriptionRoutes)
 app.use("/notification", notificationRoutes)
 app.use("/supervision", supervisionRoutes )
 
+// Middleware pour gérer les rafraîchissements de page
+app.use(express.static(path.join(__dirname, 'build')));
 
-app.get("/", (req,res)=>{
-    res.json("Yoooo")
-})
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 
 
 /*
