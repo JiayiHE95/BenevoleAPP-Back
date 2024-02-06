@@ -23,6 +23,12 @@ const sequelize = new Sequelize(database, username, password, {
   host: host,
   dialect: 'postgres',
   logging: false,
+  ssl: true, // Activer SSL/TLS
+  dialectOptions: {
+    ssl: {
+      require: true // Exiger une connexion SSL
+    }
+  }
 });
 
 
