@@ -54,11 +54,12 @@ app.use("/notification", notificationRoutes)
 app.use("/supervision", supervisionRoutes )
 
 // Middleware pour gérer les rafraîchissements de page
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
 
 
 
