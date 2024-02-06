@@ -15,6 +15,7 @@ const notificationRoutes =require("./Routes/NotificationRoutes")
 const supervisionRoutes =require("./Routes/SupervisionRoutes")
 //const bcrypt = require('bcrypt');
 //const { createTokens, validateToken} =  require('./middleware/auth')
+const path = require('path');
 
 
 const app = express();
@@ -60,13 +61,5 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-
-
-
-/*
-TODO :Pour le test du csv, à déplacer
-*/
-//const csvController=require("./Controllers/csvController")
-//csvController.importCsvToDB()
 
 module.exports = app 
