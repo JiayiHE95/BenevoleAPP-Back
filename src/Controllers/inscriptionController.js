@@ -4,11 +4,8 @@ const {Sequelize} = require('sequelize');
 
 exports.getRegisteredPeopleByCreneau = async (req, res) => {
     try {
-
-        
+  
         const { creneau } = req.body;
-
-        console.log(creneau);
 
         const inscriptions = await Inscription.findAll({
             where: { 
@@ -176,11 +173,8 @@ exports.getInscriptionsByUserCreneau = async (req, res) => {
 exports.createInscription = async (req, res) => {
  try {
      const { iduser, idcreneau, idfestival, idposte, idzonebenevole } = req.body;
-     console.log("j'entre dans la fonction");
-     console.log(idzonebenevole);
 
      if (idzonebenevole == null) {
-         console.log("idzonebenevole est null");
          const espace = await Espace.findOne({ where: { idposte: idposte } });
 
          const zonebenevole = espace.idzonebenevole;
@@ -203,7 +197,7 @@ exports.createInscription = async (req, res) => {
      }else{
        
       for (const [idZone, nomZone] of Object.entries(idzonebenevole)) {
-        console.log("j'entre dans la partie object entries");
+
        const inscription = await Inscription.create({
            iduser: iduser,
            idcreneau: idcreneau,
@@ -212,9 +206,6 @@ exports.createInscription = async (req, res) => {
            idzonebenevole: parseInt(idZone),
            valide : true
        });
-       console.log("j'ai créé inscritpion");
-       
-       
 
        const posteCreneau = await PosteCreneau.update(
         { capacite_restante: Sequelize.literal('capacite_restante - 1') },
@@ -287,7 +278,6 @@ exports.deleteInscription = async (req, res) => {
 }
 
 exports.getInscriptionsByFestival = async (req, res) => {
-    console.log("je suis dans la fonction getInscriptionsByFestival");
     try {
         const { idfestival } = req.params;
         const inscriptions = await Inscription.findAll({

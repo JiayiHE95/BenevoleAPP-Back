@@ -36,10 +36,8 @@ exports.getOneByFestival = async (req, res) => {
         });
         
         if(!jeuEspace){
-            console.log("jeuEspace not found");
             res.status(200).json({ find: false, jeuEspace: jeuEspace });
         }else{
-            console.log("jeuEspace found");
             res.status(200).json({ find: true, jeuEspace: jeuEspace });
         }
     }catch (error) {

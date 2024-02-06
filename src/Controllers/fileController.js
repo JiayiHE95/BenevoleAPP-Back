@@ -16,7 +16,6 @@ exports.importFileToDB = async (req, res) => {
       await creerEspaceForPoste()
       await updatePosteCreneauForJeu(idfestival)
     }
- //console.log("Lecture du fichier XLSX terminée2.");
   res.status(200).json({success:true, message:"Importation réussie"});
   }catch (error){
   res.status(500).json({success:false, message:error});
