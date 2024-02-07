@@ -35,11 +35,11 @@ async function updatePosteCreneauForJeu(idfestival) {
   
   
   await PosteCreneau.destroy({
-    where: {idposte: 1},
+    where: {idposte: 1, idfestival: idfestival},
     include: [
       {
         model: Creneau,
-        where: {idfestival: idfestival,},
+        where: {idfestival: idfestival},
       },
     ]
   });
