@@ -17,7 +17,8 @@ const Notification = require('./Notification')
 // Relation Poste et Espace
 Poste.hasMany(Espace,{ foreignKey: { name: 'idposte', allowNull: false }, onDelete: 'CASCADE' })
 Espace.belongsTo(Poste,{ foreignKey: { name: 'idposte', allowNull: false }})
-// Comment faire le Espace Espace ??
+
+// Relation Espace et Espace
 Espace.hasMany(Espace,{ foreignKey: { name: 'idzoneplan'}, onDelete: 'CASCADE' })
 Espace.belongsTo(Espace, { foreignKey: { name: 'idzoneplan'}, onDelete: 'CASCADE' });
 
