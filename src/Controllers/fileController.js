@@ -260,6 +260,7 @@ async function extractJeuEspace(row, festival) {
   let jeuEspace= await JeuEspace.findOne({where: { idjeu: idJeu, idfestival: idfestival  }})
   
   if(jeuEspace){
+    console.log("jeuEspace found")
     jeuEspace=jeuEspace.toJSON()
     await JeuEspace.update(
         { idzonebenevole: idzone },
@@ -267,14 +268,16 @@ async function extractJeuEspace(row, festival) {
     );
     console.log("jeuEspace existe, update")
   }else{
-    [jeuEspace, jeuEspaceCreated] = await JeuEspace.findOrCreate({
-        where: { idjeu: idJeu },
+    console.log("jeuEspace not found, create")
+    let [jeuEspace, jeuEspaceCreated] = await JeuEspace.findOrCreate({
+        where: { idjeu: idJeu,  idfestival : idfestival },
         defaults:{
+          idjeu: idJeu,
           idzonebenevole : idzone,
           idfestival : idfestival
         }
     });
-    console.log("jeuEspace statut", jeuEspaceCreated,jeuEspace.idjeuespace)
+    console.log("jeuEspace statut", jeuEspaceCreated)
   }
 
 }catch (error){ 
