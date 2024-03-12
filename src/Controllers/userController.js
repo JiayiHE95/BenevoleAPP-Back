@@ -141,6 +141,8 @@ exports.deleteUserById=( async (req, res) => {
 
 exports.login = async(req, res)=>{
   const { mail, mdp } = req.body
+  console.log("red",req)
+  console.log(req.body)
   await User.findOne({ 
     where: { mail: mail } 
   }).then((data)=>{
@@ -152,6 +154,7 @@ exports.login = async(req, res)=>{
 
             expiresIn:5000,
           })
+          console.log("data", data)
           res.send({auth:true, token:token, user:data})
         }else{
           res.send({auth:false, message:"Identifiant ou mot de pass incorrect"})
@@ -237,8 +240,8 @@ exports.passwordForgot=async(req,res)=>{
 
       const emailTemplate = fs.readFileSync('Template/reset-pw.html', 'utf8')
       const compiledTemplate = handlebars.compile(emailTemplate)
-      //const url=process.env.URL || "http://localhost:3000/"
-      const url=process.env.URL || "https://benevole-app-front.onrender.com/"
+      const url=process.env.URL || "http://localhost:3000/"
+      //const url=process.env.URL || "https://benevole-app-front.onrender.com/"
       const html = compiledTemplate({ resetPasswordLink: `${url}reset-password/${token}` });
 
       const mailOptions = {

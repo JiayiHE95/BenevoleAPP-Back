@@ -1,9 +1,11 @@
 const { Sequelize } = require("sequelize")
 
 
-//const username = process.env.DB_USERNAME || "postgres";
-//const password = process.env.DB_PASSWORD || "123";
-//onst database = process.env.DB_NAME || "benevoleAppDB";
+{/*
+const username = process.env.DB_USERNAME || "postgres";
+const password = process.env.DB_PASSWORD || "123";
+const database = process.env.DB_NAME || "benevoleAppDB";
+*/}
 
 const username = process.env.DB_USERNAME || "benevole_app_bd_user";
 const password = process.env.DB_PASSWORD || "9t2HHayiIYldQqeah6Vf3as80UepU7g4";
