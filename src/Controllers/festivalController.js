@@ -84,6 +84,7 @@ exports.getAllFestivals = async (req, res) => {
         const festivals = await Festival.findAll({
             order: [['idfestival', 'DESC']], // Ordonne par ID de manière décroissante
         });
+        console.log(festivals)
 
         res.status(200).json({ find: true, festivals: festivals });
     } catch (error) {
