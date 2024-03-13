@@ -86,7 +86,7 @@ exports.getAllFestivals = async (req, res) => {
         });
         console.log(festivals)
 
-        res.status(200).json({ find: true, festivals: festivals });
+        res.send({ find: true, festivals: festivals });
     } catch (error) {
         console.error(error);
         res.status(500).json({ find: false, message: "Erreur serveur" });
