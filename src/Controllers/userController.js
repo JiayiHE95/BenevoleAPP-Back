@@ -141,20 +141,16 @@ exports.deleteUserById=( async (req, res) => {
 
 exports.login = async(req, res)=>{
   const { mail, mdp } = req.body
-  console.log("req body",req.body)
   await User.findOne({ 
     where: { mail: mail } 
   }).then((data)=>{
     if (data){
       bcrypt.compare(mdp, data.mdp, (e, response)=>{
         if (response){
-          console.log("jai reponse")
           const iduser=data.iduser
           const token=jwt.sign({iduser},"jwtSecret",{
-
             expiresIn:5000,
           })
-          console.log("user data", data)
           res.send({auth:true, token:token, user:data})
         }else{
           res.send({auth:false, message:"Identifiant ou mot de pass incorrect"})
