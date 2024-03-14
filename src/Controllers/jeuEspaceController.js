@@ -19,6 +19,9 @@ exports.getAllJeuxByEspace = async (req, res) => {
                     // Ajoutez ici toutes les conditions supplémentaires pour la jointure si nécessaire.
                 }
             ],
+            where: {
+                idfestival: req.query.idfestival // Ajoutez la condition pour l'ID du festival
+            }
         });
 
         res.status(200).json({ jeux: jeux });

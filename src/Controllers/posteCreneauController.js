@@ -30,14 +30,11 @@ exports.createPostCreneaux = async (req, res) => {
   try {
 
   const { idfestival, postes, intervalle, heure_debut, heure_fin, date_debut, date_fin } = req.body;
-  console.log(idfestival);
 
   const jours = getDatesBetweenDates(new Date(date_debut), new Date(date_fin));
-  console.log(jours);
 
   for (const jour of jours) {
     const heuresCreneaux = generateHeuresCreneaux(heure_debut, heure_fin, intervalle);
-    console.log(heuresCreneaux)
     
     for (const heureCreneau of heuresCreneaux) {
       const creneau = await Creneau.create({
