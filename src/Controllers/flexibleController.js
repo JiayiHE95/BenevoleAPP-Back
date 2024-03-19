@@ -62,7 +62,7 @@ exports.createFlexibleUserCreneau = async (req, res) => {
             label: `Utilisateur ${username} est inscrit en tant que bénévole flexible pendant ${creneau}. Attribuez-lui un poste dès maintenant depuis le planning  !`
         });
 
-        res.status(200).json({ created : true, flexibleUserCreneau: flexibleUserCreneau });
+        res.status(200).json({ created : true, message: "FlexibleUserCreneau created successfully", flexibleUserCreneau: flexibleUserCreneau });
     } catch (error) {
         console.error(error);
         res.status(500).json({ created : false, message: "Erreur serveur" });
@@ -86,7 +86,7 @@ exports.deleteFlexibleUserCreneau = async (req, res) => {
 
         }
         
-        res.status(200).json({ deleted : true, flexibleUserCreneau: flexibleUserCreneau });
+        res.status(200).json({ deleted : true, message: "FlexibleUserCreneau deleted successfully" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ deleted : false, message: "Erreur serveur" });

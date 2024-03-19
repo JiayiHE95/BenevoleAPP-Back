@@ -151,7 +151,6 @@ exports.login = async(req, res)=>{
           const token=jwt.sign({iduser},"jwtSecret",{
             expiresIn:5000,
           })
-          console.log("user data", data)
           res.send({auth:true, token:token, user:data})
         }else{
           res.send({auth:false, message:"Identifiant ou mot de pass incorrect"})
