@@ -21,9 +21,10 @@ exports.createHebergement = async (req, res) => {
 
 // Delete a poste by ID
 exports.deleteHebergement = async (req, res) => {
-    const { idhebergement } = req.params.idhebergement;
+    
 
     try {
+        const { idhebergement } = req.params;
         // Check if the poste with the given ID exists
         const hebergement = await Hebergement.findByPk(idhebergement);
         if (!hebergement) {
@@ -44,7 +45,7 @@ exports.deleteHebergement = async (req, res) => {
 exports.getAllHebergementsByFestival = async (req, res) => {
 
     try {
-        const { idfestival } = req.params.idfestival;
+        const { idfestival } = req.params;
         const hebergements = await Hebergement.findAll({where: {idfestival : idfestival},include: [
             {
                model: User,
@@ -61,7 +62,7 @@ exports.getAllHebergementsByFestival = async (req, res) => {
 exports.getAllHebergementsByUserFestival = async (req, res) => {
 
     try {
-        const { idfestival, iduser } = req.params.idfestival;
+        const { idfestival, iduser } = req.params;
         const hebergements = await Hebergement.findAll({where: {idfestival : idfestival, iduser : iduser},include: [
             {
                model: User,
