@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS jeu CASCADE;
 DROP TABLE IF EXISTS poste CASCADE;
 DROP TABLE IF EXISTS espace CASCADE;
 DROP TABLE IF EXISTS notification CASCADE;
+DROP TABLE IF EXISTS hebergement CASCADE;
 
 CREATE TABLE "user" (
     idUser SERIAL PRIMARY KEY,
@@ -222,6 +223,17 @@ CREATE TABLE notification (
     FOREIGN KEY (idUser) REFERENCES "user"(idUser)ON DELETE  CASCADE
 );
 
+CREATE TABLE hebergement ( 
+    idhebergement SERIAL PRIMARY KEY ,
+    distance INTEGER NOT NULL,
+    description VARCHAR(255) ,
+    nb_places INTEGER NOT NULL ,
+    iduser INTEGER NOT NULL,
+    idfestival INTEGER NOT NULL,
+    FOREIGN KEY (idfestival) REFERENCES festival(idFestival)ON DELETE  CASCADE,
+    FOREIGN KEY (iduser) REFERENCES "user"(idUser)ON DELETE  CASCADE
+    
+);
 
 /*
 pour tester, avec petite liste
