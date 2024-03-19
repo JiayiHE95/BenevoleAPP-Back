@@ -15,7 +15,7 @@ router.get('/get-hebergement-by-festival/:idfestival' , hebergementController.ge
 router.get('/get-hebergement-by-user/:idfestival/:iduser' , hebergementController.getAllHebergementsByUserFestival)
 
 // Delete hébergement
-router.delete('/delete/:idhebergement', validateToken, hebergementController.deleteHebergement)
+router.delete('/delete/:idhebergement', hebergementController.deleteHebergement)
 
 module.exports = router;
 
