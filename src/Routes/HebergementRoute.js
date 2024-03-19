@@ -6,13 +6,13 @@ const {validateToken} = require('../middleware/auth')
 
 
 // Create hébergement
-router.post('/create' , validateToken, hebergementController.createHebergement)
+router.post('/create' , hebergementController.createHebergement)
 
 // Recup tous les hébergements du festival
-router.get('/get-hebergement-by-festival/:idfestival' , validateToken, hebergementController.getAllHebergementsByFestival)
+router.get('/get-hebergement-by-festival/:idfestival' , hebergementController.getAllHebergementsByFestival)
 
 //Recup tous les hébergements d'un user pour un festival
-router.get('/get-hebergement-by-user/:idfestival/:iduser' , validateToken, hebergementController.getAllHebergementsByUserFestival)
+router.get('/get-hebergement-by-user/:idfestival/:iduser' , hebergementController.getAllHebergementsByUserFestival)
 
 // Delete hébergement
 router.delete('/delete/:idhebergement', validateToken, hebergementController.deleteHebergement)
