@@ -62,7 +62,7 @@ exports.createFlexibleUserCreneau = async (req, res) => {
             label: `Utilisateur ${username} est inscrit en tant que bénévole flexible pendant ${creneau}. Attribuez-lui un poste dès maintenant depuis le planning  !`
         });
 
-        res.status(200).json({ created : true, message: "FlexibleUserCreneau created successfully", flexibleUserCreneau: flexibleUserCreneau });
+        res.status(200).json({ created : true, message: "FlexibleUserCreneau created successfully"});
     } catch (error) {
         console.error(error);
         res.status(500).json({ created : false, message: "Erreur serveur" });
@@ -132,7 +132,7 @@ exports.getOne= async (req, res) => {
         if(!flexibleUserCreneau){
             return res.json({ find: false, message: "FlexibleUserCreneau not found" });
         }else{
-         res.status(200).json({ find : true,flexibleUserCreneau: flexibleUserCreneau });
+         res.status(200).json({ find : true,message: "FlexibleUserCreneau found"});
         }
     } catch (error) {
         console.error(error);
