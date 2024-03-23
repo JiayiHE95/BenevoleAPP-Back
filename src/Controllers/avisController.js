@@ -3,7 +3,10 @@ const Avis = require('../models/Avis');
 // Récupérer tous les avis
 exports.getAllAvis = async (req, res) => {
   try {
-    const avis = await Avis.findAll();
+    const { idfestival } = req.params;
+    const avis = await Avis.findAll({
+        where: { idfestival }
+      });
     res.status(200).json(avis);
   } catch (error) {
     res.status(500).send(error.message);

@@ -5,7 +5,7 @@ const router = express.Router();
 const {validateToken} = require('../middleware/auth')
 
 
-router.get('/get-all-avis', validateToken, avisController.getAllAvis);
+router.get('/get-all-avis/:idfestival', validateToken, avisController.getAllAvis);
 router.get('/:iduser', validateToken,  avisController.getAvisByUser);
 router.post('/create', validateToken,  avisController.createAvis);
 router.put('/:idavis', validateToken,  avisController.updateAvis);
