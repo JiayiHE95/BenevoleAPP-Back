@@ -232,6 +232,7 @@ exports.createInscription2 = async (req, res) => {
               idposte: idposte,
               idfestival: idfestival,
               idzonebenevole:idzonebenevole,
+              valide: true
               
           });
    
