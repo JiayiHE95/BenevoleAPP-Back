@@ -235,6 +235,17 @@ CREATE TABLE hebergement (
     
 );
 
+CREATE TABLE avis ( 
+    idavis SERIAL PRIMARY KEY ,
+    texte VARCHAR(255) ,
+    date DATE NOT NULL ,
+    iduser INTEGER NOT NULL,
+    idfestival INTEGER NOT NULL,
+    FOREIGN KEY (idfestival) REFERENCES festival(idFestival)ON DELETE  CASCADE,
+    FOREIGN KEY (iduser) REFERENCES "user"(idUser)ON DELETE  CASCADE
+    
+);
+
 /*
 pour tester, avec petite liste
 insert into inscription VALUES(1,1,1,197, false);

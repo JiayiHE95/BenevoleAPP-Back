@@ -14,6 +14,8 @@ const inscriptionRoutes = require("./Routes/InscriptionRoutes")
 const notificationRoutes =require("./Routes/NotificationRoutes")
 const supervisionRoutes =require("./Routes/SupervisionRoutes")
 const hebergementRoutes = require("./Routes/HebergementRoute")
+const avisRoutes = require("./Routes/AvisRoutes")
+
 //const bcrypt = require('bcrypt');
 //const { createTokens, validateToken} =  require('./middleware/auth')
 const path = require('path');
@@ -55,6 +57,8 @@ app.use("/inscription", inscriptionRoutes)
 app.use("/notification", notificationRoutes)
 app.use("/supervision", supervisionRoutes )
 app.use("/hebergement", hebergementRoutes)
+app.use("/avis", avisRoutes)
+
 
 
 // Middleware pour gérer les rafraîchissements de page

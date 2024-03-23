@@ -13,6 +13,8 @@ const JeuEspace = require('./JeuEspace');
 const FlexibleUserCreneau = require('./FlexibleUserCreneau');
 const Notification = require('./Notification')
 const Hebergement = require('./Hebergement')
+const Avis = require('./Avis')
+
 
 
 // Relation Poste et Espace
@@ -112,4 +114,12 @@ Hebergement.belongsTo(User,{ foreignKey: { name: 'iduser', allowNull: false }})
 Festival.hasMany(Hebergement,{ foreignKey: { name: 'idfestival', allowNull: false }, onDelete: 'CASCADE' })
 Hebergement.belongsTo(Festival,{ foreignKey: { name: 'idfestival', allowNull: false }})
 
-module.exports = { Festival ,Notification, Creneau, Jeu, JeuEspace,Poste,PosteCreneau,Inscription,Supervision, User, Espace, FlexibleUserCreneau, Hebergement}
+// Relation Avis et User
+User.hasMany(Avis,{ foreignKey: { name: 'iduser', allowNull: false }, onDelete: 'CASCADE' })
+Avis.belongsTo(User,{ foreignKey: { name: 'iduser', allowNull: false }})
+
+// Relation Avis et Festival
+Festival.hasMany(Avis,{ foreignKey: { name: 'idfestival', allowNull: false }, onDelete: 'CASCADE' })
+Avis.belongsTo(Festival,{ foreignKey: { name: 'idfestival', allowNull: false }})
+
+module.exports = { Festival ,Notification, Creneau, Jeu, JeuEspace,Poste,PosteCreneau,Inscription,Supervision, User, Espace, FlexibleUserCreneau, Hebergement, Avis}
