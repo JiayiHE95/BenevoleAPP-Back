@@ -7,8 +7,7 @@ exports.getAllAvis = async (req, res) => {
     const avis = await Avis.findAll({
         where: { idfestival }
       });
-    res.status(200).json(avis);
-  } catch (error) {
+      res.status(200).json({ avis: avis });  } catch (error) {
     res.status(500).send(error.message);
   }
 };
