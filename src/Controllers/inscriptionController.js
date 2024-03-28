@@ -248,6 +248,31 @@ exports.createInscription2 = async (req, res) => {
     }
 }
 
+exports.createInscription3 = async (req, res) => {
+    try {
+        const { iduser, idcreneau, idfestival, idposte, idzonebenevole } = req.body;
+          const inscription = await Inscription.create({
+              iduser: iduser,
+              idcreneau: idcreneau,
+              idposte: idposte,
+              idfestival: idfestival,
+              idzonebenevole:idzonebenevole,
+              valide: true
+              
+          });
+   
+          const posteCreneau = await PosteCreneau.update(
+           { capacite_restante: Sequelize.literal('capacite_restante - 1') },
+           { where: { idposte: idposte, idcreneau: idcreneau,idzonebenevole: idzonebenevole } }
+       );
+   
+        res.status(200).json({ created: true, message: "Inscriptions created successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ created: false, message: "Erreur serveur" });
+    }
+}
+
 
 exports.getIncriptionsByPostCreneau = async (req, res) => {
     try {
