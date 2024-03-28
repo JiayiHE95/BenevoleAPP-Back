@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.post('/create' , validateToken, inscriptionController.createInscription)
 router.post('/create2' , validateToken, inscriptionController.createInscription2)
+router.post('/create3' , validateToken, inscriptionController.createInscription3)
 router.post('/delete' , validateToken, inscriptionController.deleteInscription)
 router.get('/get-by-poste-creneau' , validateToken, inscriptionController.getIncriptionsByPostCreneau)
 router.get('/get-by-user/:iduser/:idcreneau' , validateToken, inscriptionController.getInscriptionsByUserCreneau)
